@@ -4,8 +4,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #020217;
+  color: hsla(204, 87%, 10%, 0.87);
+  background-color: hsla(204, 87%, 10%, 0.87);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -14,8 +14,8 @@
 }
 
 body {
-  background-color: #020217;
-  color: white;
+  background-color: hsla(204, 87%, 10%, 0.87);
+  color: #ffffff;
 }
 
 a {
@@ -23,6 +23,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -46,7 +47,6 @@ h1 {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  /* text-align: center; */
 }
 
 button {
@@ -60,9 +60,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -73,10 +75,109 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
+
 }
+
+.bruno-ace-sc-regular {
+  font-family: "Bruno Ace SC", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+/*
+
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: black;
+}
+
+.container {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: black;
+}
+
+.galaxy {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  animation: spin 10s linear infinite;
+}
+
+.star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 10px white;
+}
+
+.star:nth-child(1) {
+  top: 50%;
+  left: 10%;
+  animation: orbit 4s linear infinite;
+}
+
+.star:nth-child(2) {
+  top: 20%;
+  left: 30%;
+  animation: orbit 6s linear infinite reverse;
+}
+
+.star:nth-child(3) {
+  top: 70%;
+  left: 40%;
+  animation: orbit 5s linear infinite;
+}
+
+.star:nth-child(4) {
+  top: 80%;
+  left: 70%;
+  animation: orbit 8s linear infinite reverse;
+}
+
+.star:nth-child(5) {
+  top: 30%;
+  left: 80%;
+  animation: orbit 7s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(100px) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(100px) rotate(-360deg);
+  }
+}
+*/
