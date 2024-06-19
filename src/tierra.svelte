@@ -6,6 +6,7 @@
 
   let isFixed = false;
   let showImage = false;
+  let showImage2 = false;
   let scrollY = tweened(0, {
     duration: 400,
     easing: cubicOut
@@ -14,10 +15,10 @@
   onMount(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const triggerPosition = 600;
-      const hastaPosition = 3550;
+      const triggerPosition = 1120;
+      const hastaPosition = 4420;
 
-      if (scrollPosition >= triggerPosition && scrollPosition <= hastaPosition) {
+      if (scrollPosition >= triggerPosition+5 && scrollPosition <= hastaPosition+5) {
         isFixed = true;
         showImage = true;
         scrollY.set(scrollPosition);
@@ -27,6 +28,17 @@
       } else {
         showImage = false;
       }
+      if (scrollPosition >= triggerPosition && scrollPosition <= hastaPosition){
+        isFixed = true;
+        showImage2 = true;
+        scrollY.set(scrollPosition);
+      } else if (scrollPosition > hastaPosition) {
+        isFixed = false;
+        showImage2 = true;
+      } else {
+        showImage2 = false;
+      }
+
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -78,12 +90,12 @@
           una atmosfera y al mismo tiempo no ser <br>
           agresiva para los seres vivos</p>
         </div> 
-        <h2 id="texto1">
-        Por estas razones, existe la posibilidad de que la Tierra deje de
-        ser habitable. Como sociedad, consciente de este posible suceso es
-        fundamental investigar y explorar nuevos exoplanetas que sean capaces de alojar vida, es decir,
-        que cumplan las condiciones anteriormente mencionadas.
-      </h2>
+        <p id="texto1">
+        Por estas razones, existe la posibilidad de que la Tierra deje de <br>
+        ser habitable. Como sociedad, consciente de este posible suceso es fundamental <br>
+        investigar y explorar nuevos exoplanetas que sean capaces <br>
+        de alojar vida, es decir, que cumplan las condiciones anteriormente mencionadas.
+      </p>
     </div>
     </div>
   </main>
@@ -109,61 +121,86 @@
   
   .section {
     position: relative;
-    bottom: 50px;
+    bottom: 350px;
     left: 150px;
-    background: rgba(61, 177, 162, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 2px;
     text-align: center;
     white-space: nowrap;
     width: 400px; /* Ajusta esta posición según tu necesidad */
     margin: 20px;
     margin-bottom: 300px;
+    z-index: 1;
   }
 
   .sectionExtra{
     position: relative;
     bottom: 50px;
     left: 150px;
-    background: rgba(61, 177, 162, 0.5);
+    background: rgba(0, 0, 0, 0.5);
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 2px;
     text-align: center;
     white-space: nowrap;
     width: 400px; /* Ajusta esta posición según tu necesidad */
     margin: 20px;   
-  }
-
-  #texto1 {
-    margin-left: 250px;
-    margin-right: 0px;
-    text-align: center;
-    position: relative;
-    top: 220px;
-    left: 50px;
     z-index: 1;
-    font-family: "Baskervville", serif;
-    line-height: 2;
   }
-  
   .image-container {
     position: relative;
     left: 820px;
-    bottom: 550px;
-    z-index: 1;
-    
+    bottom: 500px; 
+    z-index: 1;   
   }
 
   .image-container.fixed {
     position: fixed;
     top: 120px;
     opacity: 1;
+    z-index: 1;   
+
   }
 
+  .image-espacio {
+    position: relative;
+    bottom: 962px;
+    opacity: 0.3; 
+  }
+
+  .image-espacio.Fixed {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    opacity: 0.3;
+  }
+
+  #texto1 {
+    color: white;
+    text-align: center;
+    font-family: "Baskervville", serif;
+    font-size: 22px;
+    position: relative;
+    z-index: 1;
+    left: 244px;
+    top: 260px;
+    line-height: 1.9;
+    /*background-color: rgba(51, 94, 34, 0.541);*/
+    padding: 10px;
+    border-radius: 2px;
+    width: 850px; /* Ajusta esta posición según tu necesidad */
+  }
+  
 </style>
 
 <div class={`image-container ${isFixed ? 'fixed' : ''}`}>
   {#if showImage}
-  <img id="imgtierra" src="/public/images/tierra.png" width="350" alt="tierra" in:fade={{ duration: 250 }} out:fade={{ duration: 250 }} />
+    <img id="imgtierra" src="/public/images/tierra.png" width="350" alt="tierra" in:fade={{ duration: 250 }} out:fade={{ duration: 300 }} />
+  {/if}
+</div>
+
+<div class={`image-espacio ${isFixed ? 'Fixed' : ''}`}>
+  {#if showImage2}
+    <img id="espacio" src="/images/espacio.png" width="1350" alt="" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }} />
   {/if}
 </div>

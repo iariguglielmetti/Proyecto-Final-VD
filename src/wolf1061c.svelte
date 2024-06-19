@@ -1,40 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
-  import { fade, fly } from 'svelte/transition';
-  import { tweened } from 'svelte/motion';
-  import { cubicOut } from 'svelte/easing';
 
-  let isFixed = false;
-  let showImage = false;
-  let scrollY = tweened(0, {
-    duration: 400,
-    easing: cubicOut
-  });
-
- onMount(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const triggerPosition = 4600;
-      const hastaPosition = 6000;
-
-      if (scrollPosition >= triggerPosition && scrollPosition <= hastaPosition) {
-        isFixed = true;
-        showImage = true;
-        scrollY.set(scrollPosition);
-      } else if (scrollPosition > hastaPosition) {
-        isFixed = false;
-        showImage = true;
-      } else {
-        showImage = false;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  });
 </script>
 
 <main>
@@ -63,6 +28,12 @@
   </main>
   
   <style>
+    #exoplanetas{
+      font-family: "Merriweather", serif;
+      position: relative;
+      bottom: 0px;
+    }
+  
   .infoWolf{
     text-align: center;
     font-family: "Bruno Ace SC";
@@ -80,6 +51,7 @@
     white-space: nowrap;
     width: 400px; /* Ajusta esta posición según tu necesidad */
     margin: 20px;
+    bottom: 0px;
   }
 
   .section {
@@ -96,27 +68,5 @@
     margin: 20px;
   }
 
-  .image-container {
-    width: 350px;
-    position: absolute;
-    right: 800px;
-    top: 580px;
-    z-index: 1;
-    transition: top 0.3s;
-    opacity: 0;
-    transition: opacity 1s;
-  }
-  
-  .image-container.fixed {
-    position: fixed;
-    top: 130px;
-    opacity: 1;
-  }
 </style>
   
-   
-<div class={`image-container ${isFixed ? 'fixed' : ''}`}>
-  {#if showImage}
-    <img id="imgwolf1061c" src="/public/images/Wolf 1061c.png" width="350" alt="" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }} />
-  {/if}
-</div>
