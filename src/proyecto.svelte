@@ -1,30 +1,18 @@
 <script>
-  let videoRef;
-
-  function handleVideoEnded() {
-    videoRef.play();  // Reproduce el video de nuevo
-}
-  
+ 
 </script>
 
 <main>
   <div class="proyecto">
-    <img id="luz" src="/images/luzSolLuna.png" width="1350" alt=""/>
-    <video id="video" width="" height="760" alt=""
-      bind:this={videoRef} 
-      on:ended={handleVideoEnded} 
-      autoplay 
-      loop 
-      muted
-    >
-      <source src="./public/videos/14534528-uhd_3840_2160_24fps.mp4" type="video/mp4">
-      <track kind="captions" src="./public/videos/subtitulos.vtt" srclang="es" label="Español">
-      Tu navegador no soporta el elemento de video.
-    </video>
+    <img id="fondo" src="/images/espacio.jpeg" width="1349" alt=""/>
+    <img id="luz" src="/images/luz.svg" width="1349" alt=""/>
+    <img id="sol" src="/images/sol.png" width="780" alt=""/>
+    <img id="luna" src="/images/luna.png" width="400" alt=""/>
+
     <h1 id="titulo">INTERESTELAR</h1>
-    <div class="infoProyecto">
-      <h5>Visualización de Datos: Proyecto Final <br> Integrantes Gallo Tomás y Guglielmetti Iara</h5>
-    </div>
+    <h2 id="subtitulo1">Explorando el espacio</h2>
+    <h5 id="integrantes">Visualización de Datos: Proyecto Final <br> por Iara Guglielmetti y Tomás Gallo</h5>
+
     <p id="introduccion" class="interlineado">
       En la actualidad, la Tierra es el único planeta conocido que alberga
       vida, gracias a la presencia de agua líquida, temperaturas moderadas, una atmósfera 
@@ -34,64 +22,90 @@
       global, la intervención humana en el planeta y diversos desastres naturales. 
     </p>
     
-    <h2 id="subtitulo">Características del planeta Tierra que permiten el<br> desarrollo de la vida</h2>
+    <h2 id="subtitulo2">Características del planeta Tierra que permiten el<br> desarrollo de la vida</h2>
   </div>
 </main>
 
 <style>
-  .proyecto {
-    color: white;
-    text-align: center;
-    font-family: "Baskervville", serif;
-    font-size: 22px;
-    position: relative;
-    z-index: 1;
-  }
-  
-  #video {
-    position: relative;
-    bottom: 555px;
-    z-index: 0;  /* Envía el video al fondo */
-  }
-  
   #titulo {
-    font-family: "Bruno Ace SC"; 
-    font-size: 40px;
     position: relative;
-    bottom: 950px;
-    letter-spacing: 40px;
+    bottom: 764px;
+    letter-spacing: 20px;
+    text-align: center;
+    font-family: "Bruno Ace", sans-serif;
     z-index: 1;
+
   }
-
-  #luz {
+  #subtitulo1 {
     position: relative;
-    bottom: 65px;
-    z-index: 1;
-  } 
-
-  .infoProyecto{
-    font-family: "Baskervville", serif;
-    position: relative;
-    bottom: 950px;
-    color: rgb(255, 255, 255);
+    bottom: 774px;
     letter-spacing: 5px;
+    text-align: center;
+    font-family: "Bruno Ace", sans-serif;
+    font-size: 28px;
+    z-index: 1;
+
   }
 
-
-  #subtitulo {
-    font-family: "Baskervville", serif; 
+  
+  #integrantes{
     position: relative;
-    bottom: 456px;
+    bottom: 774px;
+    letter-spacing: 5px;
+    text-align: center;
+    font-family: "Baskervville", sans-serif;
+    font-size: 20px;
+    z-index: 1;
+
   }
   
   #introduccion {
-    color: white;
-    text-align: center;
-    margin-left: 250px;
-    margin-right: 250px;
     position: relative;
-    bottom: 600px;
-    line-height: 1.9;
+    bottom: 664px;
+    text-align: center;
+    font-family: "Merriweather", sans-serif;
+    margin-left: 200px;
+    margin-right: 200px;
+    line-height: 2;
+    z-index: 1;
+
   } 
+  #subtitulo2{
+    position: relative;
+    bottom: 664px;
+    text-align: center;
+    font-family: "Merriweather", sans-serif;
+    margin-left: 200px;
+    margin-right: 200px;
+    line-height: 2;
+    z-index: 1;
+
+  }
+
+  #luz{
+    position: relative;
+    bottom: 64px;
+    z-index: 1;
+  }
+  #sol {
+    position: relative;
+    bottom: 714px;
+    right: 350px;
+    z-index: 1;
+
+  } 
+  #luna {
+    position: relative;
+    bottom: 750px;
+    left: 350px;
+    z-index: 1;
+
+  }  
+
+  #fondo{
+    position: fixed;
+    bottom: 0px;
+    opacity: 0.7;
+  }
   
 </style>
