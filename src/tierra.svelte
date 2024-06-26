@@ -165,7 +165,6 @@
   .image-espacio {
     position: relative;
     bottom: 962px;
-    opacity: 0.3; 
   }
 
   .image-espacio.Fixed {

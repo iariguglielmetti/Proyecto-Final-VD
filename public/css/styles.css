@@ -5,7 +5,8 @@
 
   color-scheme: light dark;
   color: hsla(204, 87%, 10%, 0.87);
-  background-color: hsla(204, 87%, 10%, 0.87);
+  background-color: hsla(204, 87%, 11%, 0.87);
+
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,6 +16,7 @@
 
 body {
   background-color: hsla(204, 87%, 10%, 0.87);
+
   color: #ffffff;
 }
 
