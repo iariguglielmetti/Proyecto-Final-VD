@@ -1,5 +1,5 @@
 <script>
- 
+
 </script>
 
 <main>
@@ -13,24 +13,32 @@
     <h2 id="subtitulo1">Explorando el espacio</h2>
     <h5 id="integrantes">Visualización de Datos: Proyecto Final <br> por Iara Guglielmetti y Tomás Gallo</h5>
 
-    <p id="introduccion" class="interlineado">
+    <h3 id="introduccion" class="interlineado">
       En la actualidad, la Tierra es el único planeta conocido que alberga
       vida, gracias a la presencia de agua líquida, temperaturas moderadas, una atmósfera 
       protectora y otros factores importantes. Todas estas condiciones permitieron que se desarrolle 
       la vida tal y como la conocemos. Sin embargo, con el paso 
       del tiempo, estas condiciones se están deteriorando debido al avance del calentamiento 
       global, la intervención humana en el planeta y diversos desastres naturales. 
-    </p>
+    </h3>
     
-    <h2 id="subtitulo2">Características del planeta Tierra que permiten el<br> desarrollo de la vida</h2>
+    <h2 id="subtitulo2">Características del planeta Tierra que permiten el desarrollo de la vida</h2>
+
+    <div class="paraTexto"></div>
+    <img id="tierra" src="/images/tierra.png" width="700" alt=""/>
+    <div class="planetaTierra">
+      <p id="información"></p>
+
+    </div>
   </div>
+
 </main>
 
 <style>
   #titulo {
     position: relative;
     bottom: 764px;
-    letter-spacing: 20px;
+    letter-spacing: 30px;
     text-align: center;
     font-family: "Bruno Ace", sans-serif;
     z-index: 1;
@@ -47,7 +55,6 @@
 
   }
 
-  
   #integrantes{
     position: relative;
     bottom: 774px;
@@ -61,7 +68,7 @@
   
   #introduccion {
     position: relative;
-    bottom: 664px;
+    bottom: 600px;
     text-align: center;
     font-family: "Merriweather", sans-serif;
     margin-left: 200px;
@@ -72,7 +79,7 @@
   } 
   #subtitulo2{
     position: relative;
-    bottom: 664px;
+    bottom: 455px;
     text-align: center;
     font-family: "Merriweather", sans-serif;
     margin-left: 200px;
@@ -80,6 +87,15 @@
     line-height: 2;
     z-index: 1;
 
+  }
+
+  .paraTexto{
+    height: 582px;
+    width: 674.5px;
+    background-color: rgb(217, 217, 217); 
+    position: relative;
+    bottom: 400px;
+    z-index: 1; 
   }
 
   #luz{
@@ -102,6 +118,12 @@
 
   }  
 
+  #tierra{
+    position: relative;
+    z-index: 1;
+    bottom: 900px;
+    left: 670px;
+  }
   #fondo{
     position: fixed;
     bottom: 0px;
