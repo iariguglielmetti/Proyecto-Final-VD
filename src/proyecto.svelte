@@ -3,9 +3,10 @@
   import { cubicOut } from 'svelte/easing';
   import { onMount } from 'svelte';
 
+  let showAnimacion = false;
   let scrollY = 0;
   let scrollTimeout;
-  
+  let opacidad = 1;
   // Posiciones iniciales de la imagen #tierra
   const initialTop = -630;
   const initialLeft = 2000;
@@ -40,13 +41,6 @@
       
       topOffset.set(newTopOffset);
       leftOffset.set(newLeftOffset);
-
-      // Animar la anchura de la línea
-      let newWidth = 400 * (scrollY / maxOffset);
-      if (scrollY > maxOffset) {
-        newWidth = 430;
-      }
-      lineaWidth.set(newWidth);
     }, 50);
   };
 
@@ -65,17 +59,22 @@
   
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   
+    let newWidth = 0;
     if (scrollTop > lastScrollTop) {
       // Hacia abajo
       if (subtitulo2Top < windowHeight - 100) {
         animacion1.style.transform = 'translateX(0)';
+        newWidth = 430;
+        lineaWidth.set(newWidth);
       }
     } else {
       // Hacia arriba
       if (subtitulo2Top > windowHeight - 300) {
         animacion1.style.transform = 'translateX(-100vw)';
-
+        newWidth = 0;
+        lineaWidth.set(newWidth);
       }
+
     }
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Evita valores negativos
   });
@@ -118,36 +117,65 @@
     <img id="tierra" src="/images/tierra.png" width="700" alt="" style="transform: translate({$leftOffset}px, {$topOffset}px);"/>
 
     <h2 id="subtitulo2">Características del planeta Tierra que permiten el desarrollo de la vida</h2>
-   <div class="animacion1">
-    <p id="zonaRicitosDeOro">
-      Para que un planeta sea habitable, debe ubicarse en la "Zona Ricitos de Oro", 
-      región habitable de su órbita con la estrella. Esta región tiene temperaturas que posibilitan la 
-      existencia de agua líquida, un elemento esencial para la vida tal como la conocemos. 
-    </p>
-    <p id="campoMagnetico">
-      La Tierra posee un campo magnético que protege al planeta de<br> 
-      los vientos solares y la radiación  cósmica, permitiendo así un entorno adecuado para la vida.
-    </p>
-    <p id="rotacion">
-      Además, la rotación de la Tierra ayuda a moderar las temperaturas al alternar entre el día y la noche, 
-      creando un clima estable.
-    </p>
+   <!-- PONER TODAS LAS ANIMACIONES EN ANIMACIONES 1 Y AHI HAGO LOS IF DENTRO DE LA MISMA ANIMACION DONDE LES CAMBIO LA OPACIDAD -->
+   {#if showAnimacion}
+    <div class="animacion1">
+      <p id="zonaRicitosDeOro">
+        Para que un planeta sea habitable, debe ubicarse en la "Zona Ricitos de Oro", 
+        región habitable de su órbita con la estrella. Esta región tiene temperaturas que posibilitan la 
+        existencia de agua líquida, un elemento esencial para la vida tal como la conocemos. 
+      </p>
+      <p id="campoMagnetico">
+        La Tierra posee un campo magnético que protege al planeta de<br> 
+        los vientos solares y la radiación  cósmica, permitiendo así un entorno adecuado para la vida.
+      </p>
+      <p id="rotacion">
+        Además, la rotación de la Tierra ayuda a moderar las temperaturas al alternar entre el día y la noche, 
+        creando un clima estable.
+      </p>
   </div>
-  <img id="sol2" src="/images/sol.png" width="550" alt="" />
-  <p id="linea" style="width: {$lineaWidth}px;">|--------------------------------------|</p>
-  <p id="distanciaSolTierra">150.000.000 km</p>
-
-  <img id="tierra2" src="/images/tierra.png" width="250" alt=""/>
-  <div class="animacion2">
+  <div class="animacion1img">
+      <p id="linea" style="width: {$lineaWidth}px;"></p>
+      <p id="distanciaSolTierra">150.000.000 km</p>
+      <img id="sol2" src="/images/sol.png" width="550" alt="" />
+      <img id="tierra2" src="/images/tierra.png" width="250" alt=""/>
+  </div>
+  {:else}
+  <div class="animacion1">
     <h2 id="atmosfera">Atmósfera</h2>
-    <p id="atmosferaaa">
-      Además, un planeta habitable necesita una atmósfera capaz de filtrar <br>
-      los altos niveles de rayos X y UV que emanan de su estrella.
+  <p id="atmosferaRol">
+    La atmósfera cumple un rol fundamental en la protección del planeta, siendo 
+    capaz de filtrar los altos niveles de rayos X y UV emitidos 
+    por su estrella, así como los eventuales meteoritos y objetos que podrían 
+    impactar la superficie.
+  </p>
+  <p id="gases">
+    Esto es posible gracias a su composición, dominada por diversos gases, principalmente 
+    oxígeno y nitrógeno. En menor proporción, también contiene argón, dióxido de carbono 
+    y vapor de agua.
     </p> 
   </div>
-  
+  <div class="animacion1img">
+      <img id="tierra3" src="/images/tierra.png" width="500" alt=""/>
+      <svg class="circulo" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+        <!-- Círculo completo para referencia -->
+        <circle cx="50" cy="50" r="40" stroke="white" stroke-width="0" fill="none" />
+      
+        <!-- Segmento del círculo 1 -->
+        <circle cx="50" cy="50" r="40" stroke="#4A90E2" stroke-width="10" fill="none"
+                stroke-dasharray="198.5736 198.5736" stroke-dashoffset="124" />
+        
+        <!-- Segmento del círculo 2 -->
+        <circle cx="50" cy="50" r="40" stroke="#FFFFFF" stroke-width="5" fill="none"
+                stroke-dasharray="0 0" stroke-dashoffset="20.86" />
+        
+        <!-- Segmento del círculo 3 -->
+        <circle cx="50" cy="50" r="40" stroke="#D32F2F" stroke-width="1" fill="none"
+                stroke-dasharray="251.2 55.2384" stroke-dashoffset="169.6" />
+      </svg>
+  </div>
+  {/if}
 </div>
-
 </main>
 
 <style>
@@ -220,7 +248,6 @@
     font-family: "Poppins", sans-serif;
     text-align: center;
   }
-
   #zonaRicitosDeOro{
     padding: 30px;
     margin-left: 5%;
@@ -236,7 +263,7 @@
     position: relative;
     top: 70px;
   }
-
+  
   #rotacion{
     padding: 15px;
     margin-left: 5%;
@@ -245,46 +272,37 @@
     top: 70px;
   }
   #linea{
-  height: 5px;
-  overflow: hidden;
-  line-height: 6px;
-  background-color: rgb(226, 248, 246);
-  color: white;
-  position: relative;
-  left: 820px;
-  bottom: 1100px;
-  z-index: 1;
-  transition: width 2s;
+    height: 5px;
+    overflow: hidden;
+    line-height: 6px;
+    background-color: rgb(226, 248, 246);
+    color: white;
+    position: relative;
+    left: 820px;
+    bottom: 740px;
+    z-index: 1;
+    transition: width 2s ease;
   }
-
+  
   #distanciaSolTierra{
     color: white;
     font-family: "Bruno Ace", sans-serif;
     position: relative;
-    bottom: 1100px;
+    bottom: 740px;
     left: 950px;
   }
 
   #sol2{
     position: relative;
     left: 540px;
-    bottom: 1040px;
+    bottom: 1115px;
   }
   #tierra2{
     position: relative;
-    bottom: 1375px;
-    left: 1120px;
+    bottom: 1210px;
+    left: 570px;
   }
-
-  .animacion2{
-    height: 600px;
-    width: 674.5px;
-    background-color: rgb(227, 245, 238); 
-    position: relative;
-    color: rgb(0, 0, 0);
-    font-family: "Merriweather", sans-serif;
-    text-align: center;
-  }
+  
   #atmosfera{
     padding: 30px;
     margin-left: 5%;
@@ -292,17 +310,37 @@
     font-family: "Bruno Ace", sans-serif;
     font-size: 32px;
     position: relative;
-    top: 10px;
+    top: 30px;
   }
 
-  #atmosferaaa{
+  #atmosferaRol{
     padding: 15px;
     margin-left: 5%;
     margin-right: 5%;
     position: relative;
-    bottom: 30px;
+    top: 20px;
   }
 
+  #gases{
+    padding: 30px;
+    margin-left: 5%;
+    margin-right: 5%;
+    position: relative;
+    top: 20px;
+  }
+  #tierra3{
+    position: relative;
+    bottom: 990px;
+    left: 750px;
+  }
+
+  .circulo{
+    position: relative;
+    bottom: 955px;
+    left: 300px;
+    width: 400px;
+    height: 400px;    
+  }
   #luz{
     position: relative;
     bottom: 64px;
@@ -320,7 +358,7 @@
   #fondo{
     position: fixed;
     bottom: 0px;
-    opacity: 0.5;
+    opacity: 0.4;
     z-index: -0.2;
   }
   
