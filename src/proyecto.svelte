@@ -3,7 +3,7 @@
   import { cubicOut } from 'svelte/easing';
   import { onMount } from 'svelte';
 
-  let showAnimacion = false;
+  let showAnimacion = true;
   let scrollY = 0;
   let scrollTimeout;
   let opacidad = 1;
@@ -62,14 +62,17 @@
     let newWidth = 0;
     if (scrollTop > lastScrollTop) {
       // Hacia abajo
-      if (subtitulo2Top < windowHeight - 100) {
+      if (subtitulo2Top < windowHeight) {
         animacion1.style.transform = 'translateX(0)';
         newWidth = 430;
         lineaWidth.set(newWidth);
       }
+      if(true){
+
+      }
     } else {
       // Hacia arriba
-      if (subtitulo2Top > windowHeight - 300) {
+      if (subtitulo2Top > windowHeight - 500) {
         animacion1.style.transform = 'translateX(-100vw)';
         newWidth = 0;
         lineaWidth.set(newWidth);
@@ -79,9 +82,6 @@
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Evita valores negativos
   });
 </script>
-
-
-
 
 <main>
   <div class="proyecto">
@@ -156,24 +156,42 @@
     </p> 
   </div>
   <div class="animacion1img">
-      <img id="tierra3" src="/images/tierra.png" width="500" alt=""/>
-      <svg class="circulo" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-        <!-- Círculo completo para referencia -->
-        <circle cx="50" cy="50" r="40" stroke="white" stroke-width="0" fill="none" />
+      <img id="tierra3" src="/images/tierra.png" width="540" alt=""/>
+      <svg class="circulo" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">      
+        <!-- círculo rojo -->
+        <circle cx="50" cy="50" r="40" stroke="#D32F2F" stroke-width="10" fill="none"
+                stroke-dasharray="252 252" stroke-dashoffset="0" />
       
-        <!-- Segmento del círculo 1 -->
+        <!-- círculo blanco -->
         <circle cx="50" cy="50" r="40" stroke="#4A90E2" stroke-width="10" fill="none"
-                stroke-dasharray="198.5736 198.5736" stroke-dashoffset="124" />
+                stroke-dasharray="53 252" stroke-dashoffset="116" />
         
-        <!-- Segmento del círculo 2 -->
-        <circle cx="50" cy="50" r="40" stroke="#FFFFFF" stroke-width="5" fill="none"
-                stroke-dasharray="0 0" stroke-dashoffset="20.86" />
-        
-        <!-- Segmento del círculo 3 -->
-        <circle cx="50" cy="50" r="40" stroke="#D32F2F" stroke-width="1" fill="none"
-                stroke-dasharray="251.2 55.2384" stroke-dashoffset="169.6" />
+        <!-- círculo azul -->
+        <circle cx="50" cy="50" r="40" stroke="#FFFFFF" stroke-width="10" fill="none"
+                stroke-dasharray="3 252" stroke-dashoffset="13" />
       </svg>
-  </div>
+      <div class="nitrogeno">
+        <p id="linea1"></p>
+        <p id="cuadro1"></p>
+        <p id="texto1a">Nitrógeno</p>
+        <p id="texto1b">78.08%</p>
+      </div>
+    
+      <div class="oxigeno">
+        <p id="linea2"></p>
+        <p id="cuadro2"></p>
+        <p id="texto2a">Oxígeno</p>
+        <p id="texto2b">20.95%</p>
+      </div>
+    
+      <div class="otrosGases">
+        <p id="linea3"></p>
+        <p id="cuadro3"></p>
+        <p id="texto3a">Otros Gases</p>
+        <p id="texto3b">0.97%</p>
+      </div>
+
+      </div>
   {/if}
 </div>
 </main>
@@ -240,10 +258,9 @@
     height: 582px;
     width: 630px;
     background-color: rgb(227, 245, 238); 
-    position: relative;
-    bottom: 580px;
-    transform: translateX(-100vw);
-    transition: transform 6s ease;
+    position: sticky;
+    bottom: 0px;
+    transition: transform 3s ease;
     color: rgb(0, 0, 0);
     font-family: "Poppins", sans-serif;
     text-align: center;
@@ -330,16 +347,129 @@
   }
   #tierra3{
     position: relative;
-    bottom: 990px;
-    left: 750px;
+    bottom: 1055px;
+    left: 713px;
   }
 
   .circulo{
     position: relative;
-    bottom: 955px;
-    left: 300px;
-    width: 400px;
-    height: 400px;    
+    bottom: 1026px;
+    left: 230px;
+    width: 420px;
+    height: 420px;    
+  }
+
+  #linea1{
+    height: 245px;
+    width: 5px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    bottom: 1505px;
+    left: 815px;
+  }
+
+  #cuadro1{
+    height: 30px;
+    width: 100px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    bottom: 1790px;
+    left: 815px;
+  }
+  
+  #texto1a{
+    color: rgb(255, 255, 255);
+    font-family: "Bruno Ace", sans-serif;
+    position: relative;
+    bottom: 1865px;
+    left: 815px;
+  }  
+  
+  #texto1b{
+    color: rgb(0, 0, 0);
+    font-family: "Bruno Ace", sans-serif;
+    position: relative;
+    bottom: 1872px;
+    left: 831px;
+  }
+
+  .oxigeno{
+    position: relative;
+    bottom: 80px;
+  }
+
+  #linea2{
+    height: 150px;
+    width: 5px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    bottom: 1840px;
+    left: 1090px;
+  }
+
+  #cuadro2{
+    height: 30px;
+    width: 100px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    position: relative;
+    bottom: 2015px;
+    left: 1090px;
+  }
+
+  #texto2a{
+    color: rgb(255, 255, 255);
+    font-family: "Bruno Ace", sans-serif;
+    position: relative;
+    bottom: 2090px;
+    left: 1100px;
+  }  
+  
+  #texto2b{
+    color: rgb(0, 0, 0);
+    font-family: "Bruno Ace", sans-serif;
+    position: relative;
+    bottom: 2097px;
+    left: 1107px;
+  }
+
+  .otrosGases{
+    position: relative;
+    bottom: 160px;
+  }
+  #linea3{
+    height: 150px;
+    width: 5px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    bottom: 1960px;
+    left: 1145px;
+  }
+
+  #cuadro3{
+    height: 30px;
+    width: 100px;
+    background-color: rgb(255, 255, 255);
+    color: black;
+    position: relative;
+    bottom: 2126px;
+    left: 1145px;
+  }
+
+  #texto3a{
+    color: rgb(255, 255, 255);
+    font-family: "Bruno Ace", sans-serif;
+    position: relative;
+    bottom: 2200px;
+    left: 1135px;
+  }  
+  
+  #texto3b{
+    color: rgb(0, 0, 0);
+    font-family: "Bruno Ace", sans-serif;
+    position: relative;
+    bottom: 2208px;
+    left: 1170px;
   }
   #luz{
     position: relative;
