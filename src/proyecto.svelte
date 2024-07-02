@@ -1,3 +1,6 @@
+<!-- 
+  QUIERO QUE EL GRAFICO DE LOS GASES DE LA ATMOSFERA SE DISUELVA
+-->
 <script>
   import { tweened } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
@@ -16,7 +19,7 @@
   const finalLeft = 550;
   
   // Límite de desplazamiento
-  const maxOffset = 1000; // Ajusta este valor según tu diseño
+  const maxOffset = 900; // Ajusta este valor según tu diseño
 
   // Variables animadas para las posiciones top y left
   const topOffset = tweened(initialTop, { duration: 500, easing: cubicOut });
@@ -92,7 +95,7 @@
 
     <h1 id="titulo">INTERESTELAR</h1>
     <h2 id="subtitulo1">Explorando el espacio</h2>
-    <h5 id="integrantes">Visualización de Datos: Proyecto Final <br> por Iara Guglielmetti y Tomás Gallo</h5>
+    <h5 id="integrantes">Visualización de Datos: Proyecto Final <br>  por Iara Guglielmetti y Tomás Gallo</h5>
 
     <h3 id="introduccion" class="interlineado">
       En la actualidad, la Tierra es el único planeta conocido que alberga
@@ -117,8 +120,6 @@
     <img id="tierra" src="/images/tierra.png" width="700" alt="" style="transform: translate({$leftOffset}px, {$topOffset}px);"/>
 
     <h2 id="subtitulo2">Características del planeta Tierra que permiten el desarrollo de la vida</h2>
-   <!-- PONER TODAS LAS ANIMACIONES EN ANIMACIONES 1 Y AHI HAGO LOS IF DENTRO DE LA MISMA ANIMACION DONDE LES CAMBIO LA OPACIDAD -->
-   {#if showAnimacion}
     <div class="animacion1">
       <p id="zonaRicitosDeOro">
         Para que un planeta sea habitable, debe ubicarse en la "Zona Ricitos de Oro", 
@@ -140,22 +141,29 @@
       <img id="sol2" src="/images/sol.png" width="550" alt="" />
       <img id="tierra2" src="/images/tierra.png" width="250" alt=""/>
   </div>
-  {:else}
-  <div class="animacion1">
-    <h2 id="atmosfera">Atmósfera</h2>
-  <p id="atmosferaRol">
+  <div class="animacion2">
+  <p id="textoAtmosfera">
     La atmósfera cumple un rol fundamental en la protección del planeta, siendo 
     capaz de filtrar los altos niveles de rayos X y UV emitidos 
     por su estrella, así como los eventuales meteoritos y objetos que podrían 
     impactar la superficie.
-  </p>
-  <p id="gases">
+    <br>
+    <br>
     Esto es posible gracias a su composición, dominada por diversos gases, principalmente 
     oxígeno y nitrógeno. En menor proporción, también contiene argón, dióxido de carbono 
     y vapor de agua.
-    </p> 
+    <br>
+    <br>
+    La gravedad de la Tierra es lo suficientemente fuerte como para mantener una
+    atmósfera, pero no tan fuerte como para ser hostil para los organismos vivos. 
+    <br>ESCRIBIR BIEN ESTE TEXTO!!!!!!!!!!!!!!!!
+    <br>
+    TAMBIEN QUIERO QUE EL GRAFICO ESTE MAS CHICO PERO PREFIERO DEJARLO PARA LO ULTIMO PORQUE ES UN QUILOMBO SI LO CAMBIAMOS MUCHAS VECES
+    <br>
+    EL GRAFICO VA A APARECER DISOLVIENDOSE O ENTRA DESDE LA DERECHA
+  </p>
   </div>
-  <div class="animacion1img">
+  <div class="animacion2img">
       <img id="tierra3" src="/images/tierra.png" width="540" alt=""/>
       <svg class="circulo" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">      
         <!-- círculo rojo -->
@@ -192,7 +200,13 @@
       </div>
 
       </div>
-  {/if}
+      <div class="conclusionTierra">
+       <h3>
+        Por estas razones, existe la posibilidad de que la Tierra deje de ser habitable.
+        Como sociedad, consciente de este posible suceso es fundamental investigar 
+        y explorar nuevos exoplanetas que sean capaces de alojar vida.
+       </h3> 
+      </div>
 </div>
 </main>
 
@@ -212,7 +226,6 @@
     font-family: "Merriweather", sans-serif;
     font-size: 26px;
   }
-
   #integrantes{
     position: relative;
     bottom: 770px;
@@ -222,7 +235,6 @@
     line-height: 2;
     font-size: 16px;
   }
-  
   #introduccion {
     position: relative;
     bottom: 600px;
@@ -239,7 +251,6 @@
     position: relative;
     bottom: 320px;
   }
-  
   #tierra{
     position: relative;
     transition: transform 2.0s ease-out;
@@ -253,17 +264,17 @@
     margin-right: 200px;
     line-height: 2;
   }
-
   .animacion1{
     height: 582px;
     width: 630px;
-    background-color: rgb(227, 245, 238); 
-    position: sticky;
-    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.25);
+    position: relative;
+    bottom: 600px;
     transition: transform 3s ease;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-family: "Poppins", sans-serif;
     text-align: center;
+    transform: translateX(-100vw);
   }
   #zonaRicitosDeOro{
     padding: 30px;
@@ -272,7 +283,6 @@
     position: relative;
     top: 70px;
   }
-
   #campoMagnetico{
     padding: 15px;
     margin-left: 5%;
@@ -280,7 +290,6 @@
     position: relative;
     top: 70px;
   }
-  
   #rotacion{
     padding: 15px;
     margin-left: 5%;
@@ -300,7 +309,6 @@
     z-index: 1;
     transition: width 2s ease;
   }
-  
   #distanciaSolTierra{
     color: white;
     font-family: "Bruno Ace", sans-serif;
@@ -308,7 +316,6 @@
     bottom: 740px;
     left: 950px;
   }
-
   #sol2{
     position: relative;
     left: 540px;
@@ -319,26 +326,17 @@
     bottom: 1210px;
     left: 570px;
   }
-  
-  #atmosfera{
-    padding: 30px;
-    margin-left: 5%;
-    margin-right: 5%;
-    font-family: "Bruno Ace", sans-serif;
-    font-size: 32px;
+  .animacion2{
+    height: 480px;
+    width: 630px;
     position: relative;
-    top: 30px;
+    color: rgb(255, 255, 255); 
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.25);
+    bottom: 980px;
   }
-
-  #atmosferaRol{
-    padding: 15px;
-    margin-left: 5%;
-    margin-right: 5%;
-    position: relative;
-    top: 20px;
-  }
-
-  #gases{
+  #textoAtmosfera{
     padding: 30px;
     margin-left: 5%;
     margin-right: 5%;
@@ -350,7 +348,10 @@
     bottom: 1055px;
     left: 713px;
   }
-
+  .animacion2img{
+    position: relative;
+    bottom: 340px;
+  }
   .circulo{
     position: relative;
     bottom: 1026px;
@@ -358,7 +359,6 @@
     width: 420px;
     height: 420px;    
   }
-
   #linea1{
     height: 245px;
     width: 5px;
@@ -367,7 +367,6 @@
     bottom: 1505px;
     left: 815px;
   }
-
   #cuadro1{
     height: 30px;
     width: 100px;
@@ -375,8 +374,7 @@
     position: relative;
     bottom: 1790px;
     left: 815px;
-  }
-  
+  }  
   #texto1a{
     color: rgb(255, 255, 255);
     font-family: "Bruno Ace", sans-serif;
@@ -384,7 +382,6 @@
     bottom: 1865px;
     left: 815px;
   }  
-  
   #texto1b{
     color: rgb(0, 0, 0);
     font-family: "Bruno Ace", sans-serif;
@@ -392,12 +389,10 @@
     bottom: 1872px;
     left: 831px;
   }
-
   .oxigeno{
     position: relative;
     bottom: 80px;
   }
-
   #linea2{
     height: 150px;
     width: 5px;
@@ -406,7 +401,6 @@
     bottom: 1840px;
     left: 1090px;
   }
-
   #cuadro2{
     height: 30px;
     width: 100px;
@@ -416,7 +410,6 @@
     bottom: 2015px;
     left: 1090px;
   }
-
   #texto2a{
     color: rgb(255, 255, 255);
     font-family: "Bruno Ace", sans-serif;
@@ -424,7 +417,6 @@
     bottom: 2090px;
     left: 1100px;
   }  
-  
   #texto2b{
     color: rgb(0, 0, 0);
     font-family: "Bruno Ace", sans-serif;
@@ -432,7 +424,6 @@
     bottom: 2097px;
     left: 1107px;
   }
-
   .otrosGases{
     position: relative;
     bottom: 160px;
@@ -445,7 +436,6 @@
     bottom: 1960px;
     left: 1145px;
   }
-
   #cuadro3{
     height: 30px;
     width: 100px;
@@ -455,21 +445,28 @@
     bottom: 2126px;
     left: 1145px;
   }
-
   #texto3a{
     color: rgb(255, 255, 255);
     font-family: "Bruno Ace", sans-serif;
     position: relative;
     bottom: 2200px;
     left: 1135px;
-  }  
-  
+  }   
   #texto3b{
     color: rgb(0, 0, 0);
     font-family: "Bruno Ace", sans-serif;
     position: relative;
     bottom: 2208px;
     left: 1170px;
+  }
+  .conclusionTierra{
+    position: relative;
+    bottom: 2300px;
+    text-align: center;
+    font-family: "Merriweather", sans-serif;
+    margin-left: 200px;
+    margin-right: 200px;
+    line-height: 2;
   }
   #luz{
     position: relative;

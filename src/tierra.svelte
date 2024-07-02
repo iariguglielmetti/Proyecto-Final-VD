@@ -1,5 +1,67 @@
 <script>
   import { onMount } from 'svelte';
+
+  let rect;
+  let isFixed = false;
+  let startFixedPosition = 100; // La posición donde el rectángulo se fija
+  let endFixedPosition = 500;   // La posición donde el rectángulo deja de ser fijo
+
+  onMount(() => {
+    window.addEventListener('scroll', handleScroll);
+  });
+
+  function handleScroll() {
+    const rectTop = rect.getBoundingClientRect().top + window.scrollY;
+
+    if (window.scrollY >= startFixedPosition && window.scrollY < endFixedPosition && !isFixed) {
+      rect.style.position = 'fixed';
+      rect.style.top = '0px';
+      rect.style.left = '-100px'; // Inicialmente fuera de la vista
+      rect.style.transition = 'left 5s'; // Añade una transición suave
+      requestAnimationFrame(() => {
+        rect.style.left = '0px'; // Mueve el rectángulo a su posición fija
+      });
+      isFixed = true;
+    } else if ((window.scrollY < startFixedPosition || window.scrollY >= endFixedPosition) && isFixed) {
+      rect.style.position = 'relative';
+      rect.style.top = 'initial';
+      rect.style.left = 'initial';
+      rect.style.transition = 'none'; // Remueve la transición al volver a relativo
+      isFixed = false;
+    }
+  }
+</script>
+
+<main>
+<div>
+  <h1>.</h1>
+  <h1>.</h1>
+  <h1>.</h1>
+  <h1>.</h1>
+  <h1>.</h1>
+  <h1>.</h1>
+  <h1>.</h1>
+  <h1>.</h1>
+  <h1>.</h1>
+</div>
+</main>
+
+<style>
+  .rectangle {
+    width: 100px;
+    height: 100px;
+    background-color: blue;
+  }
+</style>
+
+<div bind:this={rect} class="rectangle"></div>
+
+
+
+
+<!--
+<script>
+  import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
   import { tweened } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
@@ -48,6 +110,8 @@
     };
   });
 </script>
+-->
+<!--
 
 <main>
   <div class="container">
@@ -203,3 +267,5 @@
     <img id="espacio" src="/images/espacio.png" width="1350" alt="" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }} />
   {/if}
 </div>
+-->
+
