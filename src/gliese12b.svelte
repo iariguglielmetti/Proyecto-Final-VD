@@ -1,187 +1,99 @@
 <script>
-    import { onMount } from 'svelte';
-    import { fade, fly } from 'svelte/transition';
-    import { tweened } from 'svelte/motion';
-    import { cubicOut } from 'svelte/easing';
-  
-    let isFixed = false;
-    let showImage = false;
-    let showText = false;
-    let scrollY = tweened(0, {
-      duration: 400,
-      easing: cubicOut
-    });
-  
-    onMount(() => {
-      const handleScroll = () => {
-        const scrollPosition = window.scrollY;
-        const triggerPosition = 2500;
-        const hastaPosition = 3000;
-  
-        if (scrollPosition >= triggerPosition && scrollPosition < hastaPosition) {
-          isFixed = true;
-          showImage = true;
-          showText = true;
-          scrollY.set(scrollPosition);
-        } else {
-          showImage = false;
-          showText = false;
-          scrollY.set(0);
-        }
-        if(scrollPosition < triggerPosition){
-            isFixed = false;
-        }
-      };
-  
-      window.addEventListener('scroll', handleScroll);
-  
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    });
-  </script>
-  
-  
-  <style>
-    .container {
-      display: flex;
-      z-index: 1;
-    }
-    
-    .content {
-      flex: 1;
-      padding-right: 350px;
-      font-family: "Merriweather", serif;
-      z-index: 1;
-    }
-    
-    .section {
-      position: relative;
-      bottom: 180px;
-      left: 180px;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px;
-      border-radius: 20px;
-      text-align: center;
-      white-space: nowrap;
-      width: 400px; /* Ajusta esta posición según tu necesidad */
-      margin: 20px;
-    }
-  
-    #textoCarac{
-      margin-bottom: 5px;
-      display: inline-block;
-      position: relative;
-    }
-    
-    #textoCarac::after{
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px; /* Ajusta el grosor del subrayado */
-      background-color: white; /* Ajusta el color del subrayado */
-      bottom: 0;
-      left: 0;
-    }
-  
-    #textoAtm{
-      margin-bottom: 5px;
-      display: inline-block;
-      position: relative;
-    }
-  
-    #textoAtm::after{
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px; /* Ajusta el grosor del subrayado */
-      background-color: white; /* Ajusta el color del subrayado */
-      bottom: 0;
-      left: 0;
-    }
-  
-    #texto3{
-      margin-bottom: 5px;
-      display: inline-block;
-      position: relative;
-    }
-  
-    #texto3::after{
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px; /* Ajusta el grosor del subrayado */
-      background-color: white; /* Ajusta el color del subrayado */
-      bottom: 0;
-      left: 0;
-    } 
-    
-    #texto4{
-      margin-bottom: 5px;
-      display: inline-block;
-      position: relative;
-    }
-  
-    #texto4::after{
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px; /* Ajusta el grosor del subrayado */
-      background-color: white; /* Ajusta el color del subrayado */
-      bottom: 0;
-      left: 0;
-    }
-    
-    .image-container {
-      width: 350px;
-      position: absolute;
-      right: 180px;
-      top: 580px;
-      transition: top 0.3s;
-      opacity: 0;
-      transition: opacity 1s;
-      z-index: 1;
-    }
-    
-    .image-container.fixed {
-      position: fixed;
-      top: 130px;
-      opacity: 1;
-    }
+import { tweened } from 'svelte/motion';
+import { cubicOut } from 'svelte/easing';
+import { onMount } from 'svelte';
 
-    </style>
-  
-  <div class="container">
-    <div class="content">
-      <div class="section" in:fly={{ x: -100, duration: 500 }}>
-        <h3 id="textoCarac">Características</h3>
-        <p>Agua Líquida</p>
-        <p>Energía solar</p>
-      </div> 
-      <div class="section" in:fly={{ x: -100, duration: 500 }}>
-        <h3 id="textoAtm">Atmósfera: componentes</h3>
-        <p>Oxígeno</p>
-        <p>Dióxido de carbono</p>
-        <p>Nitrógeno</p>
-      </div>
-      <div class="section" in:fly={{ x: -100, duration: 500 }}>
-        <h3 id="texto3">Contenido 3</h3>
-        <p>Información 1</p>
-        <p>Información 2</p>
-        <p>Información 3</p>
-      </div> 
-      <div class="section" in:fly={{ x: -100, duration: 500 }}>
-        <h3 id="texto4">Contenido 4</h3>
-        <p>Dato 1</p>
-        <p>Dato 2</p>
-        <p>Dato 3</p>
-      </div>
-    </div>
+let scrollY = 0;
+let scrollTimeout;
+
+// Posiciones iniciales de la imagen #tierra
+const initialTop = -520;
+const initialLeft = -700;
+
+// Posiciones finales de la imagen #tierra (posición de tierra2)
+const finalTop = -520;
+const finalLeft = 0;
+
+// Límite de desplazamiento
+const maxOffset = 3500; // Ajusta este valor según tu diseño
+
+// Variables animadas para las posiciones top y left
+const topOffset = tweened(initialTop, { duration: 300, easing: cubicOut });
+const leftOffset = tweened(initialLeft, { duration: 300, easing: cubicOut });
+
+const handleScroll = () => {
+  clearTimeout(scrollTimeout);
+  scrollY = window.scrollY;
+
+  scrollTimeout = setTimeout(() => {
+    let newTopOffset = initialTop + (finalTop - initialTop) * (scrollY / maxOffset);
+    let newLeftOffset = initialLeft + (finalLeft - initialLeft) * (scrollY / maxOffset);
     
-    <div class={`image-container ${isFixed ? 'fixed' : ''}`}>
-      {#if showImage}
-        <img id="gliese12b" src="/public/images/Gliese12b.png" width="350" alt="" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }} />
-      {/if}
+    // Asegurarse de que no se desplace más allá del límite
+    if (scrollY > maxOffset) {
+      newTopOffset = finalTop;
+      newLeftOffset = finalLeft;
+    } else if (scrollY < maxOffset) {
+      newTopOffset = initialTop;
+      newLeftOffset = initialLeft;
+    }
+    
+    topOffset.set(newTopOffset);
+    leftOffset.set(newLeftOffset);
+  }, 50);
+};
+
+onMount(() => {
+  window.addEventListener('scroll', handleScroll);
+  return () => window.removeEventListener('scroll', handleScroll);
+});
+</script>
+  
+<main>
+  <div class="Gliese12b">
+    <img id="imgGliese12b" src="/images/gliese12b.png" width="750" alt=""/>
+    <div id="introGliese" style="transform: translate({$leftOffset}px, {$topOffset}px);">
+      <h1 id="gliese">Gliese 12 b</h1>
+      <p id="infoGliese">
+        En mayo de 2024, se descubrió el exoplaneta más reciente gracias a observaciones 
+        realizadas por telescopios como el satélite TESS de la NASA, CARMENES en el Observatorio 
+        de Calar Alto y MuSCAT2 en el Observatorio del Teide. Este hallazgo fue realizado por la 
+        NASA y un equipo hispano-japonés.
+      </p>
     </div>
   </div>
-  
+</main>
+
+<style>
+  .Gliese12b{
+    position: relative;
+    bottom: 2352px;
+  }
+  #introGliese{
+    height: 582px;
+    width: 630px;
+    background-color: rgba(255, 255, 255, 0.25);
+    text-align: center;
+    position: relative;
+    transition: transform 2s ease-out;    
+  }
+  #gliese{
+    font-family: "Bruno Ace", sans-serif;
+    position: relative;
+    top: 100px;
+  }
+  #infoGliese{
+    font-family: "Poppins", sans-serif;
+    line-height: 1.7;
+    margin-left: 10%;
+    margin-right: 10%;
+    position: relative;
+    top: 150px;
+  }
+  #imgGliese12b{
+    position: relative;
+    left: 620px;
+    top: 100px;
+    opacity: 0.9;
+  }
+</style>

@@ -68,14 +68,11 @@
       if (subtitulo2Top < windowHeight) {
         animacion1.style.transform = 'translateX(0)';
         newWidth = 430;
-        lineaWidth.set(newWidth);
       }
-      if(true){
-
-      }
+      lineaWidth.set(newWidth);
     } else {
       // Hacia arriba
-      if (subtitulo2Top > windowHeight - 500) {
+      if (subtitulo2Top > windowHeight - 300) {
         animacion1.style.transform = 'translateX(-100vw)';
         newWidth = 0;
         lineaWidth.set(newWidth);
@@ -94,17 +91,17 @@
     <img id="luna" src="/images/luna.png" width="400" alt=""/>
 
     <h1 id="titulo">INTERESTELAR</h1>
-    <h2 id="subtitulo1">Explorando el espacio</h2>
-    <h5 id="integrantes">Visualización de Datos: Proyecto Final <br>  por Iara Guglielmetti y Tomás Gallo</h5>
+    <p id="subtitulo1">Explorando el espacio</p>
+    <p id="integrantes">Visualización de Datos: Proyecto Final <br>  por Iara Guglielmetti y Tomás Gallo</p>
 
-    <h3 id="introduccion" class="interlineado">
+    <p id="introduccion" class="interlineado">
       En la actualidad, la Tierra es el único planeta conocido que alberga
       vida, gracias a la presencia de agua líquida, temperaturas moderadas, una atmósfera 
       protectora y otros factores importantes. Todas estas condiciones permitieron que se desarrolle 
       la vida tal y como la conocemos. Sin embargo, con el paso 
       del tiempo, estas condiciones se están deteriorando debido al avance del calentamiento 
       global, la intervención humana en el planeta y diversos desastres naturales. 
-    </h3>
+    </p>
     
     <div class="infoTierra">
     <p id="iT">
@@ -143,40 +140,31 @@
   </div>
   <div class="animacion2">
   <p id="textoAtmosfera">
-    La atmósfera cumple un rol fundamental en la protección del planeta, siendo 
-    capaz de filtrar los altos niveles de rayos X y UV emitidos 
-    por su estrella, así como los eventuales meteoritos y objetos que podrían 
-    impactar la superficie.
+    La atmósfera juega un rol crucial en la protección del planeta, filtrando altos niveles de rayos X y 
+    UV emitidos por su estrella, así como desviando meteoritos y otros objetos potencialmente peligrosos 
+    que podrían impactar la superficie. 
     <br>
     <br>
-    Esto es posible gracias a su composición, dominada por diversos gases, principalmente 
-    oxígeno y nitrógeno. En menor proporción, también contiene argón, dióxido de carbono 
-    y vapor de agua.
+    Esta capacidad de protección se debe a su composición, dominada por diversos gases, principalmente 
+    oxígeno y nitrógeno. En menor proporción, la atmósfera también contiene argón, dióxido de carbono y vapor de agua. 
     <br>
     <br>
-    La gravedad de la Tierra es lo suficientemente fuerte como para mantener una
-    atmósfera, pero no tan fuerte como para ser hostil para los organismos vivos. 
-    <br>ESCRIBIR BIEN ESTE TEXTO!!!!!!!!!!!!!!!!
-    <br>
-    TAMBIEN QUIERO QUE EL GRAFICO ESTE MAS CHICO PERO PREFIERO DEJARLO PARA LO ULTIMO PORQUE ES UN QUILOMBO SI LO CAMBIAMOS MUCHAS VECES
-    <br>
-    EL GRAFICO VA A APARECER DISOLVIENDOSE O ENTRA DESDE LA DERECHA
+    Además, la gravedad de la Tierra es lo suficientemente fuerte como para mantener esta atmósfera, 
+    pero no tan intensa como para ser hostil para los seres vivos.
   </p>
   </div>
   <div class="animacion2img">
-      <img id="tierra3" src="/images/tierra.png" width="540" alt=""/>
+      <img id="tierra3" src="/images/tierra.png" width="520" alt=""/>
       <svg class="circulo" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">      
         <!-- círculo rojo -->
-        <circle cx="50" cy="50" r="40" stroke="#D32F2F" stroke-width="10" fill="none"
-                stroke-dasharray="252 252" stroke-dashoffset="0" />
-      
-        <!-- círculo blanco -->
-        <circle cx="50" cy="50" r="40" stroke="#4A90E2" stroke-width="10" fill="none"
-                stroke-dasharray="53 252" stroke-dashoffset="116" />
-        
+        <circle cx="50" cy="50" r="38" stroke="#D32F2F" stroke-width="8" fill="none"
+                stroke-dasharray="252 252" stroke-dashoffset="10" />
         <!-- círculo azul -->
-        <circle cx="50" cy="50" r="40" stroke="#FFFFFF" stroke-width="10" fill="none"
-                stroke-dasharray="3 252" stroke-dashoffset="13" />
+        <circle cx="50" cy="50" r="38" stroke="#4A80E2" stroke-width="8" fill="none"
+                stroke-dasharray="53 252" stroke-dashoffset="126" /> 
+        <!-- círculo blanco --> 
+        <circle cx="50" cy="50" r="38" stroke="#FFFFFF" stroke-width="8" fill="none"
+                stroke-dasharray="3 252" stroke-dashoffset="-230" />
       </svg>
       <div class="nitrogeno">
         <p id="linea1"></p>
@@ -184,28 +172,25 @@
         <p id="texto1a">Nitrógeno</p>
         <p id="texto1b">78.08%</p>
       </div>
-    
       <div class="oxigeno">
         <p id="linea2"></p>
         <p id="cuadro2"></p>
         <p id="texto2a">Oxígeno</p>
         <p id="texto2b">20.95%</p>
       </div>
-    
       <div class="otrosGases">
         <p id="linea3"></p>
         <p id="cuadro3"></p>
         <p id="texto3a">Otros Gases</p>
         <p id="texto3b">0.97%</p>
       </div>
-
       </div>
       <div class="conclusionTierra">
-       <h3>
+       <p>
         Por estas razones, existe la posibilidad de que la Tierra deje de ser habitable.
         Como sociedad, consciente de este posible suceso es fundamental investigar 
         y explorar nuevos exoplanetas que sean capaces de alojar vida.
-       </h3> 
+       </p> 
       </div>
 </div>
 </main>
@@ -223,30 +208,30 @@
     bottom: 774px;
     letter-spacing: 6px;
     text-align: center;
-    font-family: "Merriweather", sans-serif;
-    font-size: 26px;
+    font-family: "Bruno Ace", sans-serif;
+    font-size: 30px;
   }
   #integrantes{
     position: relative;
     bottom: 770px;
-    letter-spacing: 4px;
+    letter-spacing: 1px;
     text-align: center;
-    font-family: "Merriweather", sans-serif;
+    font-family: "Poppins", sans-serif;
     line-height: 2;
-    font-size: 16px;
+    font-size: 18px;
   }
   #introduccion {
     position: relative;
     bottom: 600px;
-    text-align: center;
-    font-family: "Merriweather", sans-serif;
+    font-family: "Poppins", sans-serif;
     margin-left: 200px;
     margin-right: 200px;
     line-height: 2;
+    font-size: 19px;
   } 
   .infoTierra{
     color: white;
-    font-family: "Merriweather", sans-serif;
+    font-family: "Poppins", sans-serif;
     margin-left: 10%;
     position: relative;
     bottom: 320px;
@@ -260,8 +245,8 @@
     bottom: 600px;
     text-align: center;
     font-family: "Bruno Ace", sans-serif;
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: 100px;
+    margin-right: 100px;
     line-height: 2;
   }
   .animacion1{
@@ -270,7 +255,7 @@
     background-color: rgba(255, 255, 255, 0.25);
     position: relative;
     bottom: 600px;
-    transition: transform 3s ease;
+    transition: transform 5s ease;
     color: rgb(255, 255, 255);
     font-family: "Poppins", sans-serif;
     text-align: center;
@@ -337,7 +322,7 @@
     bottom: 980px;
   }
   #textoAtmosfera{
-    padding: 30px;
+    padding: 45px;
     margin-left: 5%;
     margin-right: 5%;
     position: relative;
@@ -354,17 +339,17 @@
   }
   .circulo{
     position: relative;
-    bottom: 1026px;
-    left: 230px;
+    bottom: 1020px;
+    left: 240px;
     width: 420px;
     height: 420px;    
   }
   #linea1{
     height: 245px;
-    width: 5px;
+    width: 3px;
     background-color: rgb(255, 255, 255);
     position: relative;
-    bottom: 1505px;
+    bottom: 1500px;
     left: 815px;
   }
   #cuadro1{
@@ -372,21 +357,21 @@
     width: 100px;
     background-color: rgb(255, 255, 255);
     position: relative;
-    bottom: 1790px;
+    bottom: 1765px;
     left: 815px;
   }  
   #texto1a{
     color: rgb(255, 255, 255);
     font-family: "Bruno Ace", sans-serif;
     position: relative;
-    bottom: 1865px;
+    bottom: 1835px;
     left: 815px;
   }  
   #texto1b{
     color: rgb(0, 0, 0);
     font-family: "Bruno Ace", sans-serif;
     position: relative;
-    bottom: 1872px;
+    bottom: 1847px;
     left: 831px;
   }
   .oxigeno{
@@ -395,11 +380,11 @@
   }
   #linea2{
     height: 150px;
-    width: 5px;
+    width: 3px;
     background-color: rgb(255, 255, 255);
     position: relative;
-    bottom: 1840px;
-    left: 1090px;
+    bottom: 1825px;
+    left: 1080px;
   }
   #cuadro2{
     height: 30px;
@@ -407,30 +392,31 @@
     background-color: rgb(255, 255, 255);
     color: black;
     position: relative;
-    bottom: 2015px;
-    left: 1090px;
+    bottom: 2010px;
+    left: 1080px;
   }
   #texto2a{
     color: rgb(255, 255, 255);
     font-family: "Bruno Ace", sans-serif;
     position: relative;
-    bottom: 2090px;
-    left: 1100px;
+    bottom: 2080px;
+    left: 1090px;
   }  
   #texto2b{
     color: rgb(0, 0, 0);
     font-family: "Bruno Ace", sans-serif;
     position: relative;
-    bottom: 2097px;
-    left: 1107px;
+    bottom: 2092px;
+    left: 1099px;
   }
   .otrosGases{
     position: relative;
-    bottom: 160px;
+    bottom: 150px;
+    right: 15px;
   }
   #linea3{
     height: 150px;
-    width: 5px;
+    width: 3px;
     background-color: rgb(255, 255, 255);
     position: relative;
     bottom: 1960px;
@@ -461,12 +447,13 @@
   }
   .conclusionTierra{
     position: relative;
-    bottom: 2300px;
-    text-align: center;
-    font-family: "Merriweather", sans-serif;
+    bottom: 2200px;
+    font-family: "Poppins", sans-serif;
     margin-left: 200px;
     margin-right: 200px;
     line-height: 2;
+    font-size: 19px;
+
   }
   #luz{
     position: relative;
