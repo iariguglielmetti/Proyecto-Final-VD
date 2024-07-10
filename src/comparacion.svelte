@@ -8,8 +8,8 @@ import { writable } from 'svelte/store';
 let scrollY = 0;
 let scrollTimeout;
 let opacity = writable(0);
-const startScroll = 5550; // desde dónde empieza a verse el grafico de la atmosfera
-const maxScroll = 5650;   // cuánto scroll se necesita para que se vea por completo
+const startScroll = 5600; // desde dónde empieza a verse el grafico de la atmosfera
+const maxScroll = 5700;   // cuánto scroll se necesita para que se vea por completo
 
 // Posiciones iniciales de la imagen sol
 const initialTop = -20;
@@ -122,9 +122,9 @@ onMount(() => {
     <p id="tempWolf" style="opacity: {$opacity}">-20°C</p>
     <p id="tempGliese" style="opacity: {$opacity}">42°C</p>
     <img id="termometro" src="/images/termometro.png" width="975" alt=""/>
-    <p id="lineaTempGliese"></p>
-    <p id="lineaTempTierra"></p>
-    <p id="lineaTempWolf"></p>
+    <p id="lineaTempGliese" style="opacity: {$opacity}"></p>
+    <p id="lineaTempTierra" style="opacity: {$opacity}"></p>
+    <p id="lineaTempWolf" style="opacity: {$opacity}"></p>
     <div class="años luz">
       <p id="textoAñosLuz">
         Con respecto a cuál está más próximo a la tierra, tendremos que viajar a la velocidad de la 
@@ -355,7 +355,7 @@ onMount(() => {
     height: 23px;
     background-color: white;
     position: absolute;
-    bottom: 5885px;
+    bottom: 5874px;
     left: 400px;
   }
   #lineaTempTierra{
@@ -363,7 +363,7 @@ onMount(() => {
     height: 23px;
     background-color: white;
     position: absolute;
-    bottom: 5886px;
+    bottom: 5875px;
     left: 709px;
   }
   #lineaTempWolf{
@@ -371,7 +371,7 @@ onMount(() => {
     height: 23px;
     background-color: white;
     position: absolute;
-    bottom: 5886px;
+    bottom: 5875px;
     left: 1100px;
   }
   #textoAñosLuz{
