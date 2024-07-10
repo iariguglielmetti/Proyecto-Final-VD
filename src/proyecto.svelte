@@ -139,8 +139,8 @@
         los vientos solares y la radiación  cósmica, permitiendo así un entorno adecuado para la vida.
       </p>
       <p id="rotacion">
-        Además, la rotación de la Tierra ayuda a moderar las temperaturas al alternar entre el día y la noche, 
-        creando un clima estable.
+        Además, la rotación de la Tierra ayuda a moderar las temperaturas al alternar 
+        entre el día y la noche, creando un clima estable.
       </p>
   </div>
   <div class="animacion1img">
@@ -299,7 +299,7 @@
     height: 5px;
     overflow: hidden;
     line-height: 6px;
-    background-color: rgb(226, 248, 246);
+    background-color: #e2f8f6;
     color: white;
     position: relative;
     left: 820px;
@@ -493,3 +493,4 @@
     z-index: -0.2;
   }
 </style>
+

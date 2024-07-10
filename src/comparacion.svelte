@@ -213,7 +213,7 @@ onMount(() => {
   #lineaTierra{
     height: 6px;
     width: 230px;
-    background-color: whitesmoke;
+    background-color: #f5f5f5;
     position: relative;
     top: 195px;
     left: 165px;
@@ -492,11 +492,11 @@ onMount(() => {
   <img id="creditosLuna" src="/images/luna.png" width="300" alt=""/>
 </div>
 <div class="creditos">
-  <p style="height:2px; width:1100px; background-color: grey "></p>
+  <p style="height:2px; width:1100px; background-color: grey; "></p>
   <h2 style="font-family:Bruno Ace;">Visualización de Datos</h2>
   <p id="titulo" style="color: white; font-size: 20px; position: relative; left: 30px;">Creditos</p>
   <p style="font-family: 'Poppins'; position: relative; left: 60px;">Iara Guglielmetti</p>
-    <p style="font-family: 'Poppins'; position: relative; left: 60px;">Tomás Gallo</p>
+  <p style="font-family: 'Poppins'; position: relative; left: 60px;">Tomás Gallo</p>
   <p id="titulo" style="color: white; font-size: 20px; position: relative; bottom: 134px; left: 400px;">Correcciones y colaboraciones</p>
   <p style="font-family: 'Poppins'; position: relative; bottom: 134px;left: 430px;">Carlos Araujo</p>
   <p style="font-family: 'Poppins'; position: relative; bottom: 134px;left: 430px;">Juana Copello</p>
