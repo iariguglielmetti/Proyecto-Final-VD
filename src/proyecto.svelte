@@ -16,7 +16,7 @@
   
   // Posiciones finales de la imagen #tierra (posición de tierra2)
   const finalTop = -630;
-  const finalLeft = 550;
+  const finalLeft = 600;
   
   // Límite de desplazamiento
   const maxOffset = 900; // Ajusta este valor según tu diseño
