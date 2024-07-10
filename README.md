@@ -1,4 +1,4 @@
-Proyecto Svelte
+
 Este proyecto utiliza varias herramientas y librerías de Svelte para implementar diversas funcionalidades. 
 A continuación, se describe cada una de ellas y su propósito dentro del proyecto.
 
