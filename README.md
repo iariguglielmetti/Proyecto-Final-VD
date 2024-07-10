@@ -24,3 +24,16 @@ Utilizamos writable para gestionar el estado reactivo de ciertos elementos.
 Esta herramienta nos permite crear variables que pueden ser actualizadas y sus cambios ser automáticamente reflejados en la interfaz de usuario.
 Es especialmente útil para hacer que determinados elementos respondan a cambios específicos de estado, mejorando la interactividad y la experiencia del usuario.
 
+Este proyecto utiliza varias funciones y herramientas para implementar diversas funcionalidades. A continuación, se describe cada una de ellas y su propósito dentro del proyecto.
+Funciones Implementadas
+1. handleScroll
+const handleScroll = () => {
+    // Implementación del desplazamiento personalizado
+};
+La función handleScroll se implementó para gestionar el desplazamiento de la página de la manera deseada. Esta función permite controlar y personalizar el comportamiento del desplazamiento, asegurando que se ajuste a los requisitos específicos del proyecto, como la suavidad del scroll, la velocidad y la dirección.
+
+2. window.addEventListener
+   window.addEventListener('scroll', () => {
+    // Animaciones de cuadros que aparecen desde los costados
+});
+Utilizamos window.addEventListener para añadir un evento de escucha en el desplazamiento (scroll). Esta implementación es clave para gestionar las animaciones de los cuadros que aparecen desde los costados mientras se realiza el scroll en la página. Al detectar el evento de desplazamiento, podemos activar las animaciones correspondientes, mejorando la dinámica y la interactividad de la interfaz de usuario.
