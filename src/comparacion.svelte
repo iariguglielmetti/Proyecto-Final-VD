@@ -446,4 +446,60 @@ onMount(() => {
     position: relative;
     bottom: 4800px;
   }
+  .creditos{
+    position: relative;
+    bottom: 7650px;
+    margin-left: 10%;
+    z-index: 1;
+  }
+  #titulo{
+    font-family: "Bruno Ace";
+    color: white;
+  }
+  .imagenesCreditos{
+    position: relative;
+    bottom: 7370px;
+  }
+  #creditosSol{
+    position: relative;
+  }
+  #creditosTierra{
+    position: relative;
+    right: 200px;
+    bottom: 53px;
+  }
+  #creditosWolf{
+    position: relative;
+    right: 130px;
+    bottom: 80px;
+  }
+  #creditosGliese{
+    position: relative;
+    left: 700px;
+    bottom: 335px;
+  }
+  #creditosLuna{
+    position: relative;
+    left: 600px;
+    bottom: 320px;
+  }
 </style>
+<div class="imagenesCreditos">
+  <img id="creditosSol" src="/images/sol.png" width="550" alt=""/>
+  <img id="creditosWolf" src="/images/Wolf 1061c.png" width="170" alt="" />
+  <img id="creditosTierra" src="/images/tierra.png" width="330" alt="" />
+  <img id="creditosGliese" src="/images/Gliese12b.png" width="360" alt=""/>
+  <img id="creditosLuna" src="/images/luna.png" width="300" alt=""/>
+</div>
+<div class="creditos">
+  <p style="height:2px; width:1100px; background-color: grey "></p>
+  <h2 style="font-family:Bruno Ace;">Visualización de Datos</h2>
+  <p id="titulo" style="color: white; font-size: 20px; position: relative; left: 30px;">Creditos</p>
+  <p style="font-family: 'Poppins'; position: relative; left: 60px;">Iara Guglielmetti</p>
+    <p style="font-family: 'Poppins'; position: relative; left: 60px;">Tomás Gallo</p>
+  <p id="titulo" style="color: white; font-size: 20px; position: relative; bottom: 134px; left: 400px;">Correcciones y colaboraciones</p>
+  <p style="font-family: 'Poppins'; position: relative; bottom: 134px;left: 430px;">Carlos Araujo</p>
+  <p style="font-family: 'Poppins'; position: relative; bottom: 134px;left: 430px;">Juana Copello</p>
+  <p style="font-family: 'Poppins'; position: relative; bottom: 134px;left: 430px;">Tomás Curzio</p>
+  <a id="titulo" style="font-size: 20px; position: relative; bottom: 304px; left: 930px; text-decoration: underline;" href="https://docs.google.com/document/d/129wqfcetLNkftL2_KyaoMvEl-W0SfKXm7yp_jHls8qI/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Fuentes</a>
+</div>
