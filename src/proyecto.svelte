@@ -1,15 +1,15 @@
-<!-- 
-  QUIERO QUE EL GRAFICO DE LOS GASES DE LA ATMOSFERA SE DISUELVA
--->
 <script>
+  import { writable } from 'svelte/store';
   import { tweened } from 'svelte/motion';
   import { cubicOut } from 'svelte/easing';
   import { onMount } from 'svelte';
-
-  let showAnimacion = true;
+    
   let scrollY = 0;
   let scrollTimeout;
-  let opacidad = 1;
+  let opacity = writable(0);
+  const startScroll = 1600; // desde dónde empieza a verse el grafico de la atmosfera
+  const maxScroll = 2150;   // cuánto scroll se necesita para que se vea por completo
+
   // Posiciones iniciales de la imagen #tierra
   const initialTop = -630;
   const initialLeft = 2000;
@@ -20,18 +20,18 @@
   
   // Límite de desplazamiento
   const maxOffset = 900; // Ajusta este valor según tu diseño
-
+  
   // Variables animadas para las posiciones top y left
   const topOffset = tweened(initialTop, { duration: 500, easing: cubicOut });
   const leftOffset = tweened(initialLeft, { duration: 500, easing: cubicOut });
   
   // Variable animada para la anchura de la línea
   const lineaWidth = tweened(0, { duration: 1000, easing: cubicOut });
-
+  
   const handleScroll = () => {
     clearTimeout(scrollTimeout);
     scrollY = window.scrollY;
-
+    
     scrollTimeout = setTimeout(() => {
       let newTopOffset = initialTop + (finalTop - initialTop) * (scrollY / maxOffset);
       let newLeftOffset = initialLeft + (finalLeft - initialLeft) * (scrollY / maxOffset);
@@ -46,12 +46,12 @@
       leftOffset.set(newLeftOffset);
     }, 50);
   };
-
+  
   onMount(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   });
-
+  
   let lastScrollTop = 0; // Variable para almacenar la última posición de scroll
   
   window.addEventListener('scroll', function() {
@@ -59,9 +59,9 @@
     const animacion1 = document.querySelector('.animacion1');
     const windowHeight = window.innerHeight;
     const subtitulo2Top = subtitulo2.getBoundingClientRect().top;
-  
+    
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-  
+    
     let newWidth = 0;
     if (scrollTop > lastScrollTop) {
       // Hacia abajo
@@ -77,9 +77,25 @@
         newWidth = 0;
         lineaWidth.set(newWidth);
       }
-
     }
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // Evita valores negativos
+  });
+  
+  const handleScroll2 = () => {
+    const scrollY = window.scrollY;
+    let newOpacity = 0;
+
+    if (scrollY > startScroll) {
+      newOpacity = Math.min((scrollY - startScroll) / (maxScroll - startScroll), 1);
+    }
+
+    opacity.set(newOpacity);
+  };
+  onMount(() => {
+    window.addEventListener('scroll', handleScroll2);
+    return () => {
+      window.removeEventListener('scroll', handleScroll2);
+    };
   });
 </script>
 
@@ -89,12 +105,10 @@
     <img id="luz" src="/images/luz.svg" width="1349" alt=""/>
     <img id="sol" src="/images/sol.png" width="780" alt=""/>
     <img id="luna" src="/images/luna.png" width="400" alt=""/>
-
     <h1 id="titulo">INTERESTELAR</h1>
-    <p id="subtitulo1">Explorando el espacio</p>
+    <p id="subtitulo1">Explorando el espacio a traves de los datos</p>
     <p id="integrantes">Visualización de Datos: Proyecto Final <br>  por Iara Guglielmetti y Tomás Gallo</p>
-
-    <p id="introduccion" class="interlineado">
+    <p id="introduccion">
       En la actualidad, la Tierra es el único planeta conocido que alberga
       vida, gracias a la presencia de agua líquida, temperaturas moderadas, una atmósfera 
       protectora y otros factores importantes. Todas estas condiciones permitieron que se desarrolle 
@@ -102,20 +116,17 @@
       del tiempo, estas condiciones se están deteriorando debido al avance del calentamiento 
       global, la intervención humana en el planeta y diversos desastres naturales. 
     </p>
-    
     <div class="infoTierra">
-    <p id="iT">
-      Informacion de la tierra Informacion de la tierra <br>
-      Informacion de la tierra Informacion de la tierra <br>
-      Informacion de la tierra Informacion de la tierra <br>
-      Informacion de la tierra Informacion de la tierra <br>
-      Informacion de la tierra Informacion de la tierra <br>
-      Informacion de la tierra Informacion de la tierra <br>    
+    <p>
+      Este es el planeta Tierra, el hogar de la humanidad. <br>
+      Es el tercer planeta del sistema solar y el único conocido<br> 
+      con condiciones aptas para la vida. Un globo terrestre <br>
+      azul y verde, la Tierra es nuestro hogar y el lugar donde <br>
+      coexistimos con una multitud de formas de vida.
     </p>
      
     </div>
     <img id="tierra" src="/images/tierra.png" width="700" alt="" style="transform: translate({$leftOffset}px, {$topOffset}px);"/>
-
     <h2 id="subtitulo2">Características del planeta Tierra que permiten el desarrollo de la vida</h2>
     <div class="animacion1">
       <p id="zonaRicitosDeOro">
@@ -124,7 +135,7 @@
         existencia de agua líquida, un elemento esencial para la vida tal como la conocemos. 
       </p>
       <p id="campoMagnetico">
-        La Tierra posee un campo magnético que protege al planeta de<br> 
+        La Tierra posee un campo magnético que protege al planeta de
         los vientos solares y la radiación  cósmica, permitiendo así un entorno adecuado para la vida.
       </p>
       <p id="rotacion">
@@ -153,7 +164,7 @@
     pero no tan intensa como para ser hostil para los seres vivos.
   </p>
   </div>
-  <div class="animacion2img">
+  <div class="animacion2img" style="opacity: {$opacity}">
       <img id="tierra3" src="/images/tierra.png" width="520" alt=""/>
       <svg class="circulo" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">      
         <!-- círculo rojo -->
@@ -184,14 +195,14 @@
         <p id="texto3a">Otros Gases</p>
         <p id="texto3b">0.97%</p>
       </div>
-      </div>
-      <div class="conclusionTierra">
-       <p>
-        Por estas razones, existe la posibilidad de que la Tierra deje de ser habitable.
-        Como sociedad, consciente de este posible suceso es fundamental investigar 
-        y explorar nuevos exoplanetas que sean capaces de alojar vida.
-       </p> 
-      </div>
+  </div>
+  <div class="conclusionTierra">
+    <p>
+    Por estas razones, existe la posibilidad de que la Tierra deje de ser habitable.
+    Como sociedad, consciente de este posible suceso es fundamental investigar 
+    y explorar nuevos exoplanetas que sean capaces de alojar vida.
+    </p> 
+  </div>
 </div>
 </main>
 
@@ -206,10 +217,10 @@
   #subtitulo1 {
     position: relative;
     bottom: 774px;
-    letter-spacing: 6px;
+    letter-spacing: 1px;
     text-align: center;
     font-family: "Bruno Ace", sans-serif;
-    font-size: 30px;
+    font-size: 28px;
   }
   #integrantes{
     position: relative;
@@ -233,6 +244,7 @@
     color: white;
     font-family: "Poppins", sans-serif;
     margin-left: 10%;
+    font-size: 19px;
     position: relative;
     bottom: 320px;
   }
@@ -248,21 +260,22 @@
     margin-left: 100px;
     margin-right: 100px;
     line-height: 2;
+    font-size: 26px;
   }
   .animacion1{
     height: 582px;
     width: 630px;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgb(8, 51, 77, 0.5);
     position: relative;
     bottom: 600px;
     transition: transform 5s ease;
     color: rgb(255, 255, 255);
     font-family: "Poppins", sans-serif;
-    text-align: center;
+    font-size: 19px;
     transform: translateX(-100vw);
   }
   #zonaRicitosDeOro{
-    padding: 30px;
+    padding: 15px;
     margin-left: 5%;
     margin-right: 5%;
     position: relative;
@@ -295,8 +308,12 @@
     transition: width 2s ease;
   }
   #distanciaSolTierra{
-    color: white;
     font-family: "Bruno Ace", sans-serif;
+    color: rgb(0, 0, 0);
+    background-color: white;
+    width: 200px;
+    font-size: 18px;
+    text-align: center;
     position: relative;
     bottom: 740px;
     left: 950px;
@@ -312,21 +329,22 @@
     left: 570px;
   }
   .animacion2{
-    height: 480px;
+    height: 500px;
     width: 630px;
     position: relative;
     color: rgb(255, 255, 255); 
     font-family: "Poppins", sans-serif;
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgb(8, 51, 77, 0.5);
     bottom: 980px;
+    transition: opacity 2.0s ease;
   }
   #textoAtmosfera{
-    padding: 45px;
+    padding: 15px;
     margin-left: 5%;
     margin-right: 5%;
     position: relative;
     top: 20px;
+    font-size: 19px;
   }
   #tierra3{
     position: relative;
@@ -335,7 +353,7 @@
   }
   .animacion2img{
     position: relative;
-    bottom: 340px;
+    bottom: 355px;
   }
   .circulo{
     position: relative;
@@ -453,7 +471,6 @@
     margin-right: 200px;
     line-height: 2;
     font-size: 19px;
-
   }
   #luz{
     position: relative;
@@ -475,5 +492,4 @@
     opacity: 0.4;
     z-index: -0.2;
   }
-  
 </style>

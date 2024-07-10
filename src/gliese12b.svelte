@@ -51,7 +51,7 @@ onMount(() => {
   
 <main>
   <div class="Gliese12b">
-    <img id="imgGliese12b" src="/images/gliese12b.png" width="750" alt=""/>
+    <img id="imgGliese12b" src="/images/Gliese12b.png" width="750" alt=""/>
     <div id="introGliese" style="transform: translate({$leftOffset}px, {$topOffset}px);">
       <h1 id="gliese">Gliese 12 b</h1>
       <p id="infoGliese">
@@ -72,8 +72,7 @@ onMount(() => {
   #introGliese{
     height: 582px;
     width: 630px;
-    background-color: rgba(255, 255, 255, 0.25);
-    text-align: center;
+    background-color: rgba(8, 51, 77, 0.5);
     position: relative;
     transition: transform 2s ease-out;    
   }
@@ -81,10 +80,12 @@ onMount(() => {
     font-family: "Bruno Ace", sans-serif;
     position: relative;
     top: 100px;
+    text-align: center;
   }
   #infoGliese{
     font-family: "Poppins", sans-serif;
     line-height: 1.7;
+    font-size: 19px;
     margin-left: 10%;
     margin-right: 10%;
     position: relative;

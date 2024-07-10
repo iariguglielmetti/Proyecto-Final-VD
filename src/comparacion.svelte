@@ -2,50 +2,75 @@
 import { tweened } from 'svelte/motion';
 import { cubicOut } from 'svelte/easing';
 import { onMount } from 'svelte';
+import { writable } from 'svelte/store';
+
 
 let scrollY = 0;
-let scrollTimeou100
+let scrollTimeout;
+let opacity = writable(0);
+const startScroll = 5550; // desde dónde empieza a verse el grafico de la atmosfera
+const maxScroll = 5650;   // cuánto scroll se necesita para que se vea por completo
 
 // Posiciones iniciales de la imagen sol
 const initialTop = -20;
-const initialLeft = -450;
+const initialLeft = -1000;
 
 // Posiciones finales de la imagen sol
 const finalTop = -20;
-const finalLeft = -450;
+const finalLeft = -500;
 
 // Límite de desplazamiento
-const maxOffset = 5000; // Ajusta este valor según tu diseño
+const maxOffset = 5350; // Ajusta este valor según tu diseño
 
 // Variables animadas para las posiciones top y left
 const topOffset = tweened(initialTop, { duration: 500, easing: cubicOut });
 const leftOffset = tweened(initialLeft, { duration: 500, easing: cubicOut });
 
 const handleScroll = () => {
-  clearTimeout(scrollTimeout);
-  scrollY = window.scrollY;
-
-  scrollTimeout = setTimeout(() => {
-    let newTopOffset = initialTop + (finalTop - initialTop) * (scrollY / maxOffset);
-    let newLeftOffset = initialLeft + (finalLeft - initialLeft) * (scrollY / maxOffset);
+    clearTimeout(scrollTimeout);
+    scrollY = window.scrollY;
     
-    // Asegurarse de que no se desplace más allá del límite
-    if (scrollY > maxOffset) {
-      newTopOffset = finalTop;
-      newLeftOffset = finalLeft;
-    } else if (scrollY < maxOffset) {
-      newTopOffset = initialTop;
-      newLeftOffset = initialLeft;
-    }
-    topOffset.set(newTopOffset);
-    leftOffset.set(newLeftOffset);
-  }, 50);
+    scrollTimeout = setTimeout(() => {
+      let newTopOffset = initialTop + (finalTop - initialTop) * (scrollY / maxOffset);
+      let newLeftOffset = initialLeft + (finalLeft - initialLeft) * (scrollY / maxOffset);
+      
+      // Asegurarse de que no se desplace más allá del límite
+      if (scrollY > maxOffset) {
+        newTopOffset = finalTop;
+        newLeftOffset = finalLeft;
+      } 
+      else if (scrollY <= maxOffset) {
+        newTopOffset = initialTop;
+        newLeftOffset = initialLeft;
+      }
+           
+      topOffset.set(newTopOffset);
+      leftOffset.set(newLeftOffset);
+    }, 50);
 };
 
 onMount(() => {
   window.addEventListener('scroll', handleScroll);
   return () => window.removeEventListener('scroll', handleScroll);
 });
+
+const handleScroll2 = () => {
+    const scrollY = window.scrollY;
+    let newOpacity = 0;
+
+    if (scrollY > startScroll) {
+      newOpacity = Math.min((scrollY - startScroll) / (maxScroll - startScroll), 1);
+    }
+
+    opacity.set(newOpacity);
+  };
+onMount(() => {
+  window.addEventListener('scroll', handleScroll2);
+  return () => {
+    window.removeEventListener('scroll', handleScroll2);
+  };
+});
+
 </script>
 
 <main>
@@ -83,19 +108,69 @@ onMount(() => {
       <p id="cuadroGliese"></p>
       <p id="diametroGliese">6.104 km</p>
     </div>
-    <img id="imgGliese" src="/images/gliese12b.png" width="400" alt=""/>
-    <p id="textoWolf">
-      Aunque los planetas tengan diferentes tamaños y masas, las características de sus estrellas y las 
+    <img id="imgGliese" src="/images/Gliese12b.png" width="380" alt=""/>
+    <p id="textoTemp">
+      Aunque los planetas tengan diferentes tamaños y masas, las características de sus estrellas y las distintas
       distancias a las que orbitan permiten que las temperaturas en estos exoplanetas se mantengan dentro 
       de un rango que podría ser soportado por los seres humanos.
     </p>
     <img id="imgSol" src="/images/sol.png" width="900" alt="" style="transform: translate({$leftOffset}px, {$topOffset}px);"/>
-    <img id="imgGliese2" src="/images/gliese12b.png" width="350" alt=""/>
-    <img id="imgTierra2" src="/images/tierra.png" width="350" alt="" />
-    <img id="imgWolf2" src="/images/Wolf 1061c.png" width="250" alt="" />
-    <p id="tempTierra">15°C</p>
-    <p id="tempWolf">-20°C</p>
-    <p id="tempGliese">42°C</p>
+    <img id="imgGliese2" src="/images/Gliese12b.png" width="390" alt=""/>
+    <img id="imgTierra2" src="/images/tierra.png" width="380" alt="" />
+    <img id="imgWolf2" src="/images/Wolf 1061c.png" width="200" alt="" />
+    <p id="tempTierra" style="opacity: {$opacity}">15°C</p>
+    <p id="tempWolf" style="opacity: {$opacity}">-20°C</p>
+    <p id="tempGliese" style="opacity: {$opacity}">42°C</p>
+    <img id="termometro" src="/images/termometro.png" width="975" alt=""/>
+    <p id="lineaTempGliese"></p>
+    <p id="lineaTempTierra"></p>
+    <p id="lineaTempWolf"></p>
+    <div class="años luz">
+      <p id="textoAñosLuz">
+        Con respecto a cuál está más próximo a la tierra, tendremos que viajar a la velocidad de la 
+        luz durante todo un año terrestre, o también conocido como año luz. Dado que la luz viaja 
+        aproximadamente a 299.792.458 km/s, transcurrido el año, se habrá recorrido aproximadamente 
+        9.46 billones de kilómetros desde el planeta Tierra. Por un lado Wolf 1061 c es el exoplaneta 
+        más cercano a la tierra a tan solo 14 años luz. En cambio Gliese 12 b se encuentra a 40 años 
+        luz de la Tierra.
+      </p>
+      <div class="rectaAñosLuz">
+        <svg class="circuloTierra" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">      
+          <!-- círculo blanco de la tierra -->
+          <circle cx="50" cy="50" r="3" stroke="#FFFFFF" stroke-width="0.25" fill="white"
+                  stroke-dasharray="250 250"/>
+        </svg>
+        <p id="linea1"></p>
+        <svg class="circuloWolf" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">      
+          <!-- círculo blanco de Wolf -->
+          <circle cx="50" cy="50" r="3" stroke="#FFFFFF" stroke-width="0.25" fill="none"
+                  stroke-dasharray="250 250"/>
+        <text x="50" y="50.2" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="2" font-family="Bruno Ace">14</text>
+          
+        </svg>
+        <p id="linea2"></p>
+        <svg class="circuloGliese" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">      
+          <!-- círculo blanco de Gliese -->
+          <circle cx="50" cy="50" r="3" stroke="#FFFFFF" stroke-width="0.25" fill="none"
+                  stroke-dasharray="250 250"/>
+        <text x="50" y="50.2" text-anchor="middle" dominant-baseline="middle" fill="white" font-size="2"font-family="Bruno Ace">40</text>
+        </svg>
+      </div>
+      <div class="planetasAñosLuz">
+        <img id="imgTierra3" src="/images/tierra.png" width="270" alt="" />
+        <img id="imgWolf3" src="/images/Wolf 1061c.png" width="140" alt="" />
+        <img id="imgGliese3" src="/images/Gliese12b.png" width="290" alt=""/>
+      </div>
+    </div>
+    <p id="conclusion">
+      En conclusión, no se ha determinado si los planetas presentados son habitables. 
+      Por ejemplo, no se dispone de información sobre si Gliese 12 b posee una atmósfera. 
+      No obstante, la finalidad de nuestro estudio no era descubrir su habitabilidad. 
+      El verdadero objetivo era demostrar que, incluso si estos planetas no son habitables, 
+      es posible seguir explorando sus características para compararlas con las de un planeta 
+      cuya habitabilidad está confirmada, como la Tierra. Este enfoque nos permitirá, en el futuro, 
+      evaluar si alguno de los numerosos exoplanetas existentes puede ser habitable.   
+     </p>
   </div>
 </main>
 
@@ -110,7 +185,8 @@ onMount(() => {
     margin-left: 100px;
     margin-right: 100px;
     line-height: 2;
-    background-color: rgba(255, 255, 255, 0.25);
+    font-size: 26px;
+    background-color: rgba(8, 51, 77, 0.5);
   }
   #textoWolf{
     position: relative;
@@ -119,7 +195,7 @@ onMount(() => {
     margin-left: 200px;
     margin-right: 200px;
     line-height: 2;
-    font-size: 17px;  
+    font-size: 19px;
   }
   .tamañoTierra{
     position: relative;
@@ -136,11 +212,11 @@ onMount(() => {
   }
   #lineaTierra{
     height: 6px;
-    width: 210px;
+    width: 230px;
     background-color: whitesmoke;
     position: relative;
     top: 195px;
-    left: 175px;
+    left: 165px;
   }
   #cuadroTierra{
     height: 40px;
@@ -153,7 +229,7 @@ onMount(() => {
   }
   #imgTierra{
     position: absolute;
-    top: 570px;
+    top: 630px;
     left: 80px;
   }
   .tamañoWolf{
@@ -179,15 +255,15 @@ onMount(() => {
   }
   #lineaWolf{
     height: 6px;
-    width: 310px;
+    width: 330px;
     background-color: whitesmoke;
     position: relative;
     top: 78px;
-    left: 530px;
+    left: 520px;
   }
   #imgWolf{
     position: absolute;
-    top: 550px;
+    top: 610px;
     left: 535px;
   }
   .tamañoGliese{
@@ -221,20 +297,29 @@ onMount(() => {
   }
   #imgGliese{
     position: absolute;
-    top: 560px;
-    left: 860px;
+    top: 625px;
+    left: 870px;
+  }
+  #textoTemp{
+    position: relative;
+    top: 40px;
+    font-family: "Poppins", sans-serif;
+    margin-left: 200px;
+    margin-right: 200px;
+    line-height: 2;
+    font-size: 19px;
   }
   #imgSol{
-    transition: transform 2s ease-in;    
+    transition: transform 1.25s ease-out;
   }
   #imgTierra2{
     position: relative;
-    bottom: 460px;
-    left: 500px;
+    bottom: 465px;
+    left: 520px;
   }
   #imgWolf2{
     position: relative;
-    bottom: 450px;
+    bottom: 490px;
     left: 620px;
   }
   #imgGliese2{
@@ -245,288 +330,120 @@ onMount(() => {
   #tempTierra{
     font-family: "Bruno Ace", sans-serif;
     position: relative;
-    bottom: 500px;
-    left: 660px;
+    bottom: 460px;
+    left: 690px;
   }
   #tempWolf{
     font-family: "Bruno Ace", sans-serif;
-
+    position: relative;
+    bottom: 500px;  
+    left: 1070px;
   }
   #tempGliese{
     font-family: "Bruno Ace", sans-serif;
-
+    position: relative;
+    bottom: 540px;
+    left: 375px;
   }
-</style>
-
-<!--
-  <script>
-    import { onMount } from 'svelte';
-    
-    let rect;
-    let isFixed = false;
-    let startFixedPosition = 100; // La posición donde el rectángulo se fija
-    let endFixedPosition = 500;   // La posición donde el rectángulo deja de ser fijo
-    
-    onMount(() => {
-      window.addEventListener('scroll', handleScroll);
-    });
-    
-  function handleScroll() {
-    const rectTop = rect.getBoundingClientRect().top + window.scrollY;
-
-    if (window.scrollY >= startFixedPosition && window.scrollY < endFixedPosition && !isFixed) {
-      rect.style.position = 'fixed';
-      rect.style.top = '0px';
-      rect.style.left = '-100px'; // Inicialmente fuera de la vista
-      rect.style.transition = 'left 5s'; // Añade una transición suave
-      requestAnimationFrame(() => {
-        rect.style.left = '0px'; // Mueve el rectángulo a su posición fija
-      });
-      isFixed = true;
-    } else if ((window.scrollY < startFixedPosition || window.scrollY >= endFixedPosition) && isFixed) {
-      rect.style.position = 'relative';
-      rect.style.top = 'initial';
-      rect.style.left = 'initial';
-      rect.style.transition = 'none'; // Remueve la transición al volver a relativo
-      isFixed = false;
-    }
+  #termometro{
+    position: absolute;
+    top: 1435px;
+    left: 250px;
   }
-</script>
-
-<main>
-  <div>
-    <h1>.</h1>
-    <h1>.</h1>
-    <h1>.</h1>
-    <h1>.</h1>
-    <h1>.</h1>
-    <h1>.</h1>
-    <h1>.</h1>
-  <h1>.</h1>
-  <h1>.</h1>
-</div>
-</main>
-
-<style>
-  .rectangle {
-    width: 100px;
-    height: 100px;
-    background-color: blue;
+  #lineaTempGliese{
+    width: 5px;
+    height: 23px;
+    background-color: white;
+    position: absolute;
+    bottom: 5885px;
+    left: 400px;
   }
-</style>
-
-<div bind:this={rect} class="rectangle"></div>
-
-
-
-
-<!--
-<script>
-  import { onMount } from 'svelte';
-  import { fade, fly } from 'svelte/transition';
-  import { tweened } from 'svelte/motion';
-  import { cubicOut } from 'svelte/easing';
-  
-  let isFixed = false;
-  let showImage = false;
-  let showImage2 = false;
-  let scrollY = tweened(0, {
-    duration: 400,
-    easing: cubicOut
-  });
-
-  onMount(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      const triggerPosition = 1120;
-      const hastaPosition = 4420;
-      
-      if (scrollPosition >= triggerPosition+5 && scrollPosition <= hastaPosition+5) {
-        isFixed = true;
-        showImage = true;
-        scrollY.set(scrollPosition);
-      } else if (scrollPosition > hastaPosition) {
-        isFixed = false;
-        showImage = true;
-      } else {
-        showImage = false;
-      }
-      if (scrollPosition >= triggerPosition && scrollPosition <= hastaPosition){
-        isFixed = true;
-        showImage2 = true;
-        scrollY.set(scrollPosition);
-      } else if (scrollPosition > hastaPosition) {
-        isFixed = false;
-        showImage2 = true;
-      } else {
-        showImage2 = false;
-      }
-      
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  });
-</script>
--->
-<!--
-
-<main>
-  <div class="container">
-    <div class="content">
-      <div class="section">
-        <p>Presencia de agua líquida <br> ya sea como océano, río o lago</p>
-      </div>
-      
-      <div class="section">
-        <p>Ubicada en la “Zona Ricitos de Oro” es <br> 
-        considerada una región habitable por que <br>
-          se encuentra sobre la órbita de su estrella, <br>
-          en este caso el sol, lo que genera temperaturas <br>
-          agradables para los organismos vivos.</p>
-      </div>
-      <div class="section">
-        <p>La generación de energía renovables</p>
-      </div> 
-      <div class="section">
-        <p>Tener una atmósfera protectora de los rayos X<br>
-          y UV, gracias a sus compuestos como el oxígeno, <br>
-          el dióxido de carbono, el nitrógeno, el argón <br>
-          y la Capa de Ozono.</p>
-        </div>  
-        <div class="section">
-        <p>El ciclo del Carbono regula de manera eficiente<br>
-           el dióxido de carbono y mantiene las <br>
-           temperaturas en un rango habitable.</p>
-      </div> 
-      <div class="section">
-        <p>Posee un campo magnético que protege de <br>
-        vientos solares y la radiación cósmica</p>
-      </div> 
-      <div class="section">
-        <p>La rotación, el cambio entre el día y <br>
-        la noche, ayuda a moderar las temperaturas</p>
-      </div> 
-      <div class="sectionExtra">
-        <p>La gravedad logra un equilibrio para mantener <br>
-          una atmosfera y al mismo tiempo no ser <br>
-          agresiva para los seres vivos</p>
-        </div> 
-        <p id="texto1">
-        Por estas razones, existe la posibilidad de que la Tierra deje de <br>
-        ser habitable. Como sociedad, consciente de este posible suceso es fundamental <br>
-        investigar y explorar nuevos exoplanetas que sean capaces <br>
-        de alojar vida, es decir, que cumplan las condiciones anteriormente mencionadas.
-      </p>
-    </div>
-  </div>
-  </main>
-  
-  <style>
-    #imgtierra {
-      position: relative;
-    right: 0px;
-    z-index: 1;
+  #lineaTempTierra{
+    width: 5px;
+    height: 23px;
+    background-color: white;
+    position: absolute;
+    bottom: 5886px;
+    left: 709px;
   }
-  
-  .container {
-    display: flex;
-    z-index: 1;
+  #lineaTempWolf{
+    width: 5px;
+    height: 23px;
+    background-color: white;
+    position: absolute;
+    bottom: 5886px;
+    left: 1100px;
   }
-  
-  .content {
-    flex: 1;
-    padding-right: 350px;
-    font-family: "Merriweather", serif;
-    z-index: 1;
-  }
-  
-  .section {
+  #textoAñosLuz{
     position: relative;
     bottom: 350px;
-    left: 150px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 2px;
-    text-align: center;
-    white-space: nowrap;
-    width: 400px; /* Ajusta esta posición según tu necesidad */
-    margin: 20px;
-    margin-bottom: 300px;
-    z-index: 1;
+    font-family: "Poppins", sans-serif;
+    margin-left: 200px;
+    margin-right: 700px;
+    line-height: 2;
+    font-size: 19px;
   }
-  
-  .sectionExtra{
+  .rectaAñosLuz{
     position: relative;
-    bottom: 50px;
-    left: 150px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    border-radius: 2px;
-    text-align: center;
-    white-space: nowrap;
-    width: 400px; /* Ajusta esta posición según tu necesidad */
-    margin: 20px;   
-    z-index: 1;
+    bottom: 75px;
   }
-  .image-container {
+  .circuloTierra{
     position: relative;
-    left: 820px;
-    bottom: 500px; 
-    z-index: 1;   
+    bottom: 1400px;
+    left: 350px;
   }
-  
-  .image-container.fixed {
-    position: fixed;
-    top: 120px;
-    opacity: 1;
-    z-index: 1;   
-    
-  }
-
-  .image-espacio {
+  #linea1{
+    width: 5px;
+    height: 100px;
+    background-color: white;
     position: relative;
-    bottom: 962px;
+    bottom: 2058px;
+    left: 1025px;
   }
-  
-  .image-espacio.Fixed {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    opacity: 0.3;
-  }
-  
-  #texto1 {
-    color: white;
-    text-align: center;
-    font-family: "Baskervville", serif;
-    font-size: 22px;
+  .circuloWolf{
     position: relative;
-    z-index: 1;
-    left: 244px;
-    top: 260px;
-    line-height: 1.9;
-    /*background-color: rgba(51, 94, 34, 0.541);*/
-    padding: 10px;
-    border-radius: 2px;
-    width: 850px; /* Ajusta esta posición según tu necesidad */
+    bottom: 2710px;
+    left: 350px;
   }
-  
+  #linea2{
+    width: 5px;
+    height: 150px;
+    background-color: white;
+    position: relative;
+    bottom: 3367px;
+    left: 1025px;
+  }
+  .circuloGliese{
+    position: relative;
+    bottom: 4019px;
+    left: 350px;
+  }
+  .planetasAñosLuz{
+    position: relative;
+    bottom: 5245px;
+    left: 1030px;
+  }
+  #imgTierra3{
+    position: relative;
+    bottom: 70px;
+  }
+  #imgWolf3{
+    position: relative;  
+    right: 480px;
+    top: 90px;
+  }
+  #imgGliese3{
+    position: relative;
+    right: 430px;
+    top: 365px;
+  }
+  #conclusion{
+    font-family: "Poppins", sans-serif;
+    margin-left: 200px;
+    margin-right: 180px;
+    line-height: 2;
+    font-size: 19px;  
+    position: relative;
+    bottom: 4800px;
+  }
 </style>
-
-<div class={`image-container ${isFixed ? 'fixed' : ''}`}>
-  {#if showImage}
-  <img id="imgtierra" src="/public/images/tierra.png" width="350" alt="tierra" in:fade={{ duration: 250 }} out:fade={{ duration: 300 }} />
-  {/if}
-</div>
-
-<div class={`image-espacio ${isFixed ? 'Fixed' : ''}`}>
-  {#if showImage2}
-  <img id="espacio" src="/images/espacio.png" width="1350" alt="" in:fade={{ duration: 400 }} out:fade={{ duration: 400 }} />
-  {/if}
-</div>
-
--->
